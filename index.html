@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Brannon White — AI/ML Engineer & Software Engineer II. Portfolio showcasing machine learning projects, RAG systems, reinforcement learning, and full-stack development.">
+    <meta name="keywords" content="AI engineer, ML engineer, machine learning, RAG, LLM, NLP, React, Python, PyTorch">
+    <meta name="author" content="Brannon White">
+    <meta property="og:title" content="Brannon White | AI/ML Engineer">
+    <meta property="og:description" content="Software Engineer building intelligent systems at the intersection of software engineering and machine learning.">
+    <meta property="og:type" content="website">
+    <title>Brannon White | AI/ML Engineer</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <a href="#hero" class="nav-brand">BW</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="hero">
+        <canvas id="neural-canvas"></canvas>
+        <div class="hero-content">
+            <p class="hero-greeting">Hello, I'm</p>
+            <h1 class="hero-name">Brannon White</h1>
+            <div class="hero-title-row">
+                <span class="hero-title" id="typewriter"></span><span class="cursor">|</span>
+            </div>
+            <p class="hero-desc">
+                Software Engineer II at Unum &nbsp;·&nbsp; M.S. AI &amp; ML Candidate<br>
+                Building intelligent systems where robust engineering meets cutting-edge AI.
+            </p>
+            <div class="hero-actions">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-outline">Get In Touch</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-num">4+</span>
+                    <span class="stat-lbl">Years Experience</span>
+                </div>
+                <div class="stat-div"></div>
+                <div class="stat">
+                    <span class="stat-num">4</span>
+                    <span class="stat-lbl">AI/ML Projects</span>
+                </div>
+                <div class="stat-div"></div>
+                <div class="stat">
+                    <span class="stat-num">90%</span>
+                    <span class="stat-lbl">Testing Efficiency Gain</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">01 / About Me</span>
+                <h2 class="section-title">Bridging Engineering<br>&amp; Artificial Intelligence</h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <p>I'm a Software Engineer II at Unum with a genuine passion for building intelligent systems. While my professional background spans full-stack development, legacy system modernization, and automated testing, my focus has steadily shifted toward machine learning and AI.</p>
+                    <p>I'm currently pursuing a <strong>Master's degree in Artificial Intelligence and Machine Learning</strong>, diving deep into transformers, reinforcement learning, NLP, and production ML systems. I love working at the boundary where solid software engineering meets cutting-edge AI — building things that are not just intelligent, but reliable, maintainable, and impactful.</p>
+                    <p>I'm actively looking for AI/ML engineering roles where I can apply both my production engineering experience and my growing ML expertise.</p>
+                    <div class="interest-tags">
+                        <span class="itag">Large Language Models</span>
+                        <span class="itag">RAG Systems</span>
+                        <span class="itag">Reinforcement Learning</span>
+                        <span class="itag">Transformers</span>
+                        <span class="itag">MLOps</span>
+                        <span class="itag">NLP</span>
+                    </div>
+                </div>
+                <div class="about-cards reveal">
+                    <div class="about-card">
+                        <div class="about-card-icon">🏆</div>
+                        <h3>Hackathon Winner</h3>
+                        <p>Built a RAG chatbot with vector search + GPT-4 for enterprise business rule querying — won company-wide competition</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-card-icon">🎓</div>
+                        <h3>M.S. AI/ML — In Progress</h3>
+                        <p>Graduate coursework in deep learning, reinforcement learning, NLP, computer vision, and ML systems</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-card-icon">⚡</div>
+                        <h3>90% Efficiency Gain</h3>
+                        <p>Led automated testing initiative that cut critical business process testing time by ~90%</p>
+                    </div>
+                    <div class="about-card">
+                        <div class="about-card-icon">🔬</div>
+                        <h3>Undergraduate Research Award</h3>
+                        <p>Recognized for senior capstone: a web app enabling approved users to schedule time on particle accelerators</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="section section-dark">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">02 / Projects</span>
+                <h2 class="section-title">AI &amp; Machine Learning<br>Projects</h2>
+            </div>
+            <div class="filter-row reveal">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="llm">LLM / RAG</button>
+                <button class="filter-btn" data-filter="nlp">NLP</button>
+                <button class="filter-btn" data-filter="rl">Reinforcement Learning</button>
+                <button class="filter-btn" data-filter="mlops">MLOps</button>
+            </div>
+            <div class="projects-grid">
+
+                <div class="project-card reveal" data-category="llm">
+                    <div class="project-badge">🏆 Hackathon Winner</div>
+                    <div class="project-top">
+                        <span class="project-icon">🤖</span>
+                        <a href="https://github.com/brannon-white" class="gh-link" target="_blank" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                    </div>
+                    <h3 class="project-title">Enterprise RAG Chatbot</h3>
+                    <p class="project-desc">
+                        Intelligent conversational AI for querying 10,000+ enterprise business rules using Retrieval-Augmented Generation. Combines Pinecone vector search with GPT-4 generation for accurate, context-aware responses with source attribution.
+                    </p>
+                    <div class="project-metrics">
+                        <div class="metric"><span class="mval">40%</span><span class="mlbl">Faster lookups</span></div>
+                        <div class="metric"><span class="mval">10K+</span><span class="mlbl">Rules indexed</span></div>
+                        <div class="metric"><span class="mval">#1</span><span class="mlbl">Hackathon rank</span></div>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">RAG</span><span class="tag">GPT-4</span><span class="tag">LangChain</span>
+                        <span class="tag">Pinecone</span><span class="tag">React</span><span class="tag">FastAPI</span>
+                    </div>
+                </div>
+
+                <div class="project-card reveal" data-category="nlp">
+                    <div class="project-top">
+                        <span class="project-icon">🧠</span>
+                        <a href="https://github.com/brannon-white" class="gh-link" target="_blank" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                    </div>
+                    <h3 class="project-title">Transformer Sentiment Pipeline</h3>
+                    <p class="project-desc">
+                        Fine-tuned DistilBERT for multi-class sentiment and intent classification on customer feedback. Includes full end-to-end pipeline: data preprocessing, fine-tuning, Redis-cached inference, and a FastAPI serving layer for production-scale traffic.
+                    </p>
+                    <div class="project-metrics">
+                        <div class="metric"><span class="mval">94.3%</span><span class="mlbl">Test accuracy</span></div>
+                        <div class="metric"><span class="mval">12ms</span><span class="mlbl">Avg. latency</span></div>
+                        <div class="metric"><span class="mval">50K/day</span><span class="mlbl">Requests handled</span></div>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">PyTorch</span><span class="tag">HuggingFace</span><span class="tag">DistilBERT</span>
+                        <span class="tag">FastAPI</span><span class="tag">Redis</span><span class="tag">Docker</span>
+                    </div>
+                </div>
+
+                <div class="project-card reveal" data-category="rl">
+                    <div class="project-top">
+                        <span class="project-icon">🎮</span>
+                        <a href="https://github.com/brannon-white" class="gh-link" target="_blank" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                    </div>
+                    <h3 class="project-title">Deep RL Game Agent</h3>
+                    <p class="project-desc">
+                        Graduate research project implementing and benchmarking DQN, PPO, and A3C agents across Atari game environments. Includes hyperparameter sensitivity analysis, architecture ablations, and generalization study with TensorBoard visualizations.
+                    </p>
+                    <div class="project-metrics">
+                        <div class="metric"><span class="mval">2.3×</span><span class="mlbl">Human baseline (Breakout)</span></div>
+                        <div class="metric"><span class="mval">3/5</span><span class="mlbl">Games beating human</span></div>
+                        <div class="metric"><span class="mval">PPO</span><span class="mlbl">Best algorithm</span></div>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">PyTorch</span><span class="tag">Gymnasium</span><span class="tag">DQN</span>
+                        <span class="tag">PPO</span><span class="tag">TensorBoard</span><span class="tag">NumPy</span>
+                    </div>
+                </div>
+
+                <div class="project-card reveal" data-category="mlops">
+                    <div class="project-top">
+                        <span class="project-icon">⚙️</span>
+                        <a href="https://github.com/brannon-white" class="gh-link" target="_blank" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                    </div>
+                    <h3 class="project-title">LoRA Fine-Tuning Framework</h3>
+                    <p class="project-desc">
+                        Modular parameter-efficient fine-tuning pipeline using LoRA and QLoRA for domain-specific LLM adaptation. Supports LLaMA, Mistral, and Phi-3 base models with automated experiment tracking via Weights &amp; Biases and configurable quantization levels.
+                    </p>
+                    <div class="project-metrics">
+                        <div class="metric"><span class="mval">73%</span><span class="mlbl">Cost vs full fine-tune</span></div>
+                        <div class="metric"><span class="mval">96%</span><span class="mlbl">Baseline performance</span></div>
+                        <div class="metric"><span class="mval">3</span><span class="mlbl">Base models supported</span></div>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">LoRA</span><span class="tag">QLoRA</span><span class="tag">HuggingFace PEFT</span>
+                        <span class="tag">LLaMA</span><span class="tag">W&amp;B</span><span class="tag">Python</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">03 / Experience</span>
+                <h2 class="section-title">Professional<br>Experience</h2>
+            </div>
+            <div class="timeline">
+
+                <div class="timeline-item reveal">
+                    <div class="tl-marker"></div>
+                    <div class="tl-content">
+                        <div class="tl-head">
+                            <div>
+                                <h3 class="tl-role">Software Engineer II</h3>
+                                <span class="tl-company">Unum</span>
+                                <span class="tl-loc">· Chattanooga, TN</span>
+                            </div>
+                            <span class="tl-period">2022 – Present</span>
+                        </div>
+                        <ul class="tl-bullets">
+                            <li>Rapidly became proficient in COBOL to design and implement mainframe changes for new business requirements</li>
+                            <li>Modernized legacy ASP.NET web pages to React.js, achieving <strong>~60% reduction</strong> in development time for feature updates</li>
+                            <li>Led automated testing initiative reducing testing time for a critical business process by <strong>~90%</strong></li>
+                            <li>Won company-wide hackathon by building a RAG chatbot that dramatically improved business rule accessibility</li>
+                            <li>Mentored an intern, providing guidance on development practices and code quality</li>
+                        </ul>
+                        <div class="tag-row">
+                            <span class="tag">React.js</span><span class="tag">COBOL</span><span class="tag">ASP.NET</span>
+                            <span class="tag">Selenium</span><span class="tag">Azure</span><span class="tag">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="tl-marker"></div>
+                    <div class="tl-content">
+                        <div class="tl-head">
+                            <div>
+                                <h3 class="tl-role">Software Engineer</h3>
+                                <span class="tl-company">The Dixie Group</span>
+                                <span class="tl-loc">· Dalton, GA</span>
+                            </div>
+                            <span class="tl-period">2022</span>
+                        </div>
+                        <ul class="tl-bullets">
+                            <li>Set up a Service-Oriented Architecture server enabling seamless cross-application integration</li>
+                            <li>Designed and developed a .NET application for end-users, enhancing functionality and UX</li>
+                            <li>Developed APIs to retrieve assets from the company's content management system</li>
+                            <li>Gathered user requirements and feedback to refine application features</li>
+                        </ul>
+                        <div class="tag-row">
+                            <span class="tag">.NET Core</span><span class="tag">C#</span><span class="tag">SOA</span><span class="tag">REST APIs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal">
+                    <div class="tl-marker"></div>
+                    <div class="tl-content">
+                        <div class="tl-head">
+                            <div>
+                                <h3 class="tl-role">Software Engineer Intern</h3>
+                                <span class="tl-company">Unum</span>
+                                <span class="tl-loc">· Chattanooga, TN</span>
+                            </div>
+                            <span class="tl-period">2022</span>
+                        </div>
+                        <ul class="tl-bullets">
+                            <li>Built scalable Lightning Web Components for a Salesforce-based web application</li>
+                            <li>Gained proficiency in Apex to enhance backend processes and Salesforce data integration</li>
+                            <li>Key contributor to intern project analyzing employee attrition strategies</li>
+                            <li>Collaborated with cross-functional teams on feature deployment and integration</li>
+                        </ul>
+                        <div class="tag-row">
+                            <span class="tag">Salesforce</span><span class="tag">Apex</span><span class="tag">LWC</span><span class="tag">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="section section-dark">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">04 / Skills</span>
+                <h2 class="section-title">Technical<br>Skills</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-cat reveal">
+                    <h3 class="skill-cat-title"><span class="skill-icon">🤖</span>AI / Machine Learning</h3>
+                    <div class="skill-tags">
+                        <span class="stag adv">PyTorch</span>
+                        <span class="stag adv">HuggingFace</span>
+                        <span class="stag adv">LangChain</span>
+                        <span class="stag adv">scikit-learn</span>
+                        <span class="stag mid">TensorFlow</span>
+                        <span class="stag mid">LoRA / QLoRA</span>
+                        <span class="stag mid">RAG Systems</span>
+                        <span class="stag mid">Vector DBs</span>
+                        <span class="stag mid">OpenAI API</span>
+                        <span class="stag mid">Gymnasium</span>
+                    </div>
+                </div>
+                <div class="skill-cat reveal">
+                    <h3 class="skill-cat-title"><span class="skill-icon">💻</span>Languages</h3>
+                    <div class="skill-tags">
+                        <span class="stag adv">Python</span>
+                        <span class="stag adv">JavaScript</span>
+                        <span class="stag adv">TypeScript</span>
+                        <span class="stag adv">SQL</span>
+                        <span class="stag mid">C#</span>
+                        <span class="stag mid">COBOL</span>
+                        <span class="stag mid">Apex</span>
+                    </div>
+                </div>
+                <div class="skill-cat reveal">
+                    <h3 class="skill-cat-title"><span class="skill-icon">🌐</span>Frontend &amp; Frameworks</h3>
+                    <div class="skill-tags">
+                        <span class="stag adv">React.js</span>
+                        <span class="stag adv">Node.js</span>
+                        <span class="stag adv">.NET Core</span>
+                        <span class="stag mid">FastAPI</span>
+                        <span class="stag mid">Next.js</span>
+                        <span class="stag mid">ASP.NET</span>
+                    </div>
+                </div>
+                <div class="skill-cat reveal">
+                    <h3 class="skill-cat-title"><span class="skill-icon">🛠️</span>Tools &amp; Infrastructure</h3>
+                    <div class="skill-tags">
+                        <span class="stag adv">Git</span>
+                        <span class="stag adv">Azure</span>
+                        <span class="stag adv">Jest</span>
+                        <span class="stag adv">Selenium</span>
+                        <span class="stag mid">Docker</span>
+                        <span class="stag mid">MLflow</span>
+                        <span class="stag mid">Weights &amp; Biases</span>
+                        <span class="stag mid">Octopus Deploy</span>
+                        <span class="stag mid">MSTest</span>
+                    </div>
+                </div>
+            </div>
+            <div class="skill-legend reveal">
+                <span class="leg-item"><span class="leg-dot adv"></span>Advanced</span>
+                <span class="leg-item"><span class="leg-dot mid"></span>Intermediate</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education -->
+    <section id="education" class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">05 / Education</span>
+                <h2 class="section-title">Education</h2>
+            </div>
+            <div class="edu-grid">
+                <div class="edu-card featured-edu reveal">
+                    <div class="edu-badge">In Progress</div>
+                    <div class="edu-icon">🎓</div>
+                    <h3 class="edu-degree">Master of Science</h3>
+                    <p class="edu-field">Artificial Intelligence &amp; Machine Learning</p>
+                    <p class="edu-school">Currently Enrolled</p>
+                    <div class="edu-courses">
+                        <h4>Key Coursework</h4>
+                        <div class="course-tags">
+                            <span class="ctag">Deep Learning</span>
+                            <span class="ctag">Reinforcement Learning</span>
+                            <span class="ctag">Natural Language Processing</span>
+                            <span class="ctag">Computer Vision</span>
+                            <span class="ctag">ML Systems</span>
+                            <span class="ctag">Statistical ML</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="edu-card reveal">
+                    <div class="edu-icon">🏛️</div>
+                    <h3 class="edu-degree">Bachelor of Science</h3>
+                    <p class="edu-field">Computer Science</p>
+                    <p class="edu-school">University of Tennessee, Chattanooga</p>
+                    <p class="edu-period">2019 – 2022</p>
+                    <div class="edu-achievement">
+                        <span>🏆</span>
+                        <p>Undergraduate Research Award — Particle Accelerator Scheduling Web Application</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section section-dark">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">06 / Contact</span>
+                <h2 class="section-title">Let's Connect</h2>
+                <p class="section-sub">I'm actively looking for AI/ML engineering roles. Whether you have an opportunity, a question, or just want to talk about AI — my inbox is open.</p>
+            </div>
+            <div class="contact-grid reveal">
+                <a href="mailto:brannonwhite01@gmail.com" class="contact-card">
+                    <div class="cc-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+                    </div>
+                    <div class="cc-info">
+                        <span class="cc-label">Email</span>
+                        <span class="cc-value">brannonwhite01@gmail.com</span>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+                <a href="https://www.linkedin.com/in/brannon-white-42b4b1205" class="contact-card" target="_blank" rel="noopener">
+                    <div class="cc-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                    </div>
+                    <div class="cc-info">
+                        <span class="cc-label">LinkedIn</span>
+                        <span class="cc-value">brannon-white-42b4b1205</span>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+                <a href="https://github.com/brannon-white" class="contact-card" target="_blank" rel="noopener">
+                    <div class="cc-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </div>
+                    <div class="cc-info">
+                        <span class="cc-label">GitHub</span>
+                        <span class="cc-value">brannon-white</span>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+                <a href="tel:7067646743" class="contact-card">
+                    <div class="cc-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.44 2 2 0 0 1 3.6 2.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.08 6.08l.95-.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="cc-info">
+                        <span class="cc-label">Phone</span>
+                        <span class="cc-value">706-764-6743</span>
+                    </div>
+                    <span class="cc-arrow">→</span>
+                </a>
+            </div>
+            <p class="contact-note reveal">Based in Chattanooga, TN &nbsp;·&nbsp; Open to remote opportunities</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <p class="footer-name">Brannon White</p>
+                <p class="footer-copy">Built with HTML, CSS &amp; vanilla JS · Hosted on GitHub Pages</p>
+                <div class="footer-links">
+                    <a href="https://www.linkedin.com/in/brannon-white-42b4b1205" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="https://github.com/brannon-white" target="_blank" rel="noopener">GitHub</a>
+                    <a href="mailto:brannonwhite01@gmail.com">Email</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+    <script src="js/main.js"></script>
+</body>
+</html>
