@@ -244,6 +244,18 @@ function initFilters() {
 }
 
 /* ══════════════════════════════════════
+   Scroll Progress Bar
+══════════════════════════════════════ */
+function initScrollProgress() {
+    const bar = document.getElementById('scrollProgress');
+    if (!bar) return;
+    window.addEventListener('scroll', () => {
+        const total = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = total > 0 ? `${(window.scrollY / total) * 100}%` : '0';
+    }, { passive: true });
+}
+
+/* ══════════════════════════════════════
    Back to Top Button
 ══════════════════════════════════════ */
 function initBackToTop() {
@@ -275,5 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initReveal();
     initNav();
     initFilters();
+    initScrollProgress();
     initBackToTop();
 });

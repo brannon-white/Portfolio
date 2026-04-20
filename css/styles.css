@@ -1077,6 +1077,20 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 /* ═══════════════════════════════════════
+   Scroll Progress
+═══════════════════════════════════════ */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    background: linear-gradient(90deg, var(--accent), var(--purple));
+    z-index: 200;
+    transition: width 0.1s linear;
+}
+
+/* ═══════════════════════════════════════
    Back to Top
 ═══════════════════════════════════════ */
 .back-to-top {
