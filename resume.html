@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brannon White — Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Reset ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        ul { list-style: none; }
+        a { color: inherit; text-decoration: none; }
+
+        /* ── Variables ── */
+        :root {
+            --teal:     #1a8a7a;
+            --teal-lt:  #e8f5f3;
+            --dark:     #1a1a2e;
+            --mid:      #4a4a6a;
+            --light:    #6b7280;
+            --border:   #e2e8f0;
+            --bg:       #ffffff;
+            --sidebar:  #f8fffe;
+        }
+
+        /* ── Page ── */
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: 9pt;
+            line-height: 1.55;
+            color: var(--dark);
+            background: #e5e7eb;
+        }
+
+        .page {
+            width: 8.5in;
+            min-height: 11in;
+            margin: 24px auto;
+            background: var(--bg);
+            box-shadow: 0 4px 40px rgba(0,0,0,0.18);
+            display: grid;
+            grid-template-columns: 1fr 2.4in;
+            grid-template-rows: auto 1fr;
+        }
+
+        /* ── Header (full-width) ── */
+        .header {
+            grid-column: 1 / -1;
+            background: var(--dark);
+            color: white;
+            padding: 28px 32px 24px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .header-left h1 {
+            font-size: 28pt;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .header-left .title {
+            font-size: 10.5pt;
+            color: #5ddbc8;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 5px;
+            font-size: 8.5pt;
+            color: #c8d6e5;
+        }
+
+        .header-right a { color: #5ddbc8; }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contact-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--teal);
+            flex-shrink: 0;
+        }
+
+        /* ── Main column ── */
+        .main {
+            padding: 24px 28px 32px 32px;
+            border-right: 1px solid var(--border);
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            background: var(--sidebar);
+            padding: 24px 20px 32px;
+        }
+
+        /* ── Section ── */
+        .section { margin-bottom: 20px; }
+
+        .section-title {
+            font-size: 7.5pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--teal);
+            border-bottom: 1.5px solid var(--teal);
+            padding-bottom: 4px;
+            margin-bottom: 12px;
+        }
+
+        /* ── Summary ── */
+        .summary p {
+            color: var(--mid);
+            font-size: 9pt;
+            line-height: 1.65;
+        }
+
+        /* ── Experience ── */
+        .job { margin-bottom: 16px; }
+        .job:last-child { margin-bottom: 0; }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+
+        .job-title {
+            font-size: 9.5pt;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .job-period {
+            font-size: 8pt;
+            color: var(--light);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .job-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .job-company {
+            font-size: 8.5pt;
+            font-weight: 600;
+            color: var(--teal);
+        }
+
+        .job-location {
+            font-size: 8pt;
+            color: var(--light);
+        }
+
+        .job-bullets {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .job-bullets li {
+            font-size: 8.5pt;
+            color: var(--mid);
+            padding-left: 12px;
+            position: relative;
+            line-height: 1.55;
+        }
+
+        .job-bullets li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--teal);
+            font-size: 7pt;
+            top: 1px;
+        }
+
+        .job-bullets li strong {
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 7px;
+        }
+
+        .jtag {
+            font-size: 7pt;
+            padding: 2px 7px;
+            border-radius: 3px;
+            background: var(--teal-lt);
+            color: var(--teal);
+            font-weight: 500;
+            border: 1px solid rgba(26,138,122,0.2);
+        }
+
+        /* ── Education ── */
+        .edu-item { margin-bottom: 12px; }
+        .edu-item:last-child { margin-bottom: 0; }
+
+        .edu-degree {
+            font-size: 9pt;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .edu-field {
+            font-size: 8.5pt;
+            color: var(--teal);
+            font-weight: 500;
+        }
+
+        .edu-school {
+            font-size: 8.5pt;
+            color: var(--mid);
+        }
+
+        .edu-year {
+            font-size: 8pt;
+            color: var(--light);
+        }
+
+        .edu-badge {
+            display: inline-block;
+            font-size: 7pt;
+            padding: 2px 8px;
+            border-radius: 10px;
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffc107;
+            font-weight: 600;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        /* ── Sidebar: Skills ── */
+        .skill-group { margin-bottom: 12px; }
+        .skill-group:last-child { margin-bottom: 0; }
+
+        .skill-group-title {
+            font-size: 7.5pt;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .skill-chip {
+            font-size: 7.5pt;
+            padding: 3px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            color: var(--mid);
+            background: white;
+            line-height: 1.2;
+        }
+
+        .skill-chip.primary {
+            background: var(--teal-lt);
+            border-color: rgba(26,138,122,0.25);
+            color: var(--teal);
+            font-weight: 500;
+        }
+
+        /* ── Sidebar: Achievements ── */
+        .achievement { margin-bottom: 14px; }
+        .achievement:last-child { margin-bottom: 0; }
+
+        .ach-title {
+            font-size: 8.5pt;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ach-star { color: var(--teal); font-size: 9pt; }
+
+        .ach-body {
+            font-size: 8pt;
+            color: var(--mid);
+            line-height: 1.55;
+        }
+
+        /* ── Print ── */
+        @media print {
+            body { background: white; font-size: 9pt; }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                width: 100%;
+                min-height: 0;
+            }
+            @page { size: letter; margin: 0; }
+        }
+
+        /* ── Print button (screen only) ── */
+        .print-bar {
+            width: 8.5in;
+            margin: 0 auto 12px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        .print-btn {
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+        .print-btn.primary {
+            background: var(--teal);
+            color: white;
+        }
+        .print-btn.primary:hover { background: #157a6b; }
+        .print-btn.secondary {
+            background: white;
+            color: var(--dark);
+            border: 1px solid var(--border);
+        }
+        .print-btn.secondary:hover { background: #f1f5f9; }
+        @media print { .print-bar { display: none; } }
+    </style>
+</head>
+<body>
+
+<div class="print-bar">
+    <a href="index.html"><button class="print-btn secondary">← Portfolio</button></a>
+    <button class="print-btn primary" onclick="window.print()">Save as PDF</button>
+</div>
+
+<div class="page">
+
+    <!-- ══ HEADER ══ -->
+    <header class="header">
+        <div class="header-left">
+            <h1>BRANNON WHITE</h1>
+            <div class="title">AI/ML Engineer &nbsp;·&nbsp; Software Engineer II</div>
+        </div>
+        <div class="header-right">
+            <div class="contact-row">
+                <span class="contact-dot"></span>
+                <span>706-764-6743</span>
+            </div>
+            <div class="contact-row">
+                <span class="contact-dot"></span>
+                <a href="mailto:brannonwhite01@gmail.com">brannonwhite01@gmail.com</a>
+            </div>
+            <div class="contact-row">
+                <span class="contact-dot"></span>
+                <a href="https://linkedin.com/in/brannon-white-42b4b1205" target="_blank">linkedin.com/in/brannon-white-42b4b1205</a>
+            </div>
+            <div class="contact-row">
+                <span class="contact-dot"></span>
+                <a href="https://github.com/brannon-white" target="_blank">github.com/brannon-white</a>
+            </div>
+            <div class="contact-row">
+                <span class="contact-dot"></span>
+                <span>Chattanooga, TN</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ══ MAIN ══ -->
+    <main class="main">
+
+        <!-- Summary -->
+        <section class="section summary">
+            <div class="section-title">Summary</div>
+            <p>
+                Software Engineer II with 4+ years of experience delivering production systems across full-stack development, legacy modernization, and CI/CD — now focused on AI/ML engineering. Currently pursuing a <strong>Master's in Artificial Intelligence &amp; Machine Learning</strong>, with hands-on project experience in LLMs, RAG systems, transformer fine-tuning, and reinforcement learning. Proven track record driving measurable efficiency gains and shipping impactful software in enterprise environments. Hackathon winner for an enterprise RAG chatbot powered by vector search and GPT-4.
+            </p>
+        </section>
+
+        <!-- Experience -->
+        <section class="section">
+            <div class="section-title">Professional Experience</div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Software Engineer II</span>
+                    <span class="job-period">2022 – Present</span>
+                </div>
+                <div class="job-meta">
+                    <span class="job-company">Unum</span>
+                    <span class="job-location">Chattanooga, TN</span>
+                </div>
+                <ul class="job-bullets">
+                    <li>Drove full modernization of business-critical legacy ASP.NET applications to React.js, cutting new feature development time by <strong>~60%</strong> and eliminating years of accumulated technical debt across multiple production systems</li>
+                    <li>Owned end-to-end production releases via Octopus Deploy and Azure DevOps pipelines — managed multi-environment deployments, triaged pipeline failures, and coordinated with stakeholders to maintain release cadence</li>
+                    <li>Designed and championed an automated regression testing framework using Selenium and MSTest that reduced testing time on a high-stakes business process by <strong>~90%</strong>, enabling the team to ship with greater speed and confidence</li>
+                    <li>Won company-wide hackathon by architecting and shipping an enterprise RAG chatbot — integrated Pinecone vector search with GPT-4 to make 10,000+ business rules instantly queryable in plain English</li>
+                    <li>Onboarded and mentored multiple interns and new developers, establishing code review standards and engineering best practices that accelerated team ramp-up and raised overall code quality</li>
+                    <li>Implemented COBOL mainframe changes to support new product launches and regulatory requirements, collaborating directly with business stakeholders to meet critical delivery deadlines</li>
+                </ul>
+                <div class="job-tags">
+                    <span class="jtag">React.js</span>
+                    <span class="jtag">Node.js</span>
+                    <span class="jtag">COBOL</span>
+                    <span class="jtag">ASP.NET</span>
+                    <span class="jtag">Azure DevOps</span>
+                    <span class="jtag">Octopus Deploy</span>
+                    <span class="jtag">JFrog</span>
+                    <span class="jtag">Selenium</span>
+                    <span class="jtag">SQL Server</span>
+                </div>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Software Engineer</span>
+                    <span class="job-period">2022</span>
+                </div>
+                <div class="job-meta">
+                    <span class="job-company">The Dixie Group</span>
+                    <span class="job-location">Dalton, GA</span>
+                </div>
+                <ul class="job-bullets">
+                    <li>Architected and deployed a Service-Oriented Architecture server that unified data access across multiple internal applications, eliminating integration silos and simplifying future system expansion</li>
+                    <li>Designed and shipped a .NET application used daily by operations staff for browsing and retrieving assets from the company's content management system</li>
+                    <li>Built and documented RESTful APIs against the CMS, enabling programmatic asset retrieval and integration into downstream workflows</li>
+                    <li>Ran requirements discovery sessions with end users and translated business needs into technical specifications, tightening the feedback loop between engineering and operations</li>
+                </ul>
+                <div class="job-tags">
+                    <span class="jtag">.NET Core</span>
+                    <span class="jtag">C#</span>
+                    <span class="jtag">REST APIs</span>
+                    <span class="jtag">SOA</span>
+                </div>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Software Engineer Intern</span>
+                    <span class="job-period">2022</span>
+                </div>
+                <div class="job-meta">
+                    <span class="job-company">Unum</span>
+                    <span class="job-location">Chattanooga, TN</span>
+                </div>
+                <ul class="job-bullets">
+                    <li>Built reusable, production-grade Lightning Web Components deployed to a Salesforce platform serving thousands of users, with a focus on component reusability and long-term maintainability</li>
+                    <li>Developed Apex backend logic to surface, validate, and manipulate Salesforce records, integrating tightly with existing platform APIs and data models</li>
+                    <li>Contributed research and data analysis to a cross-functional intern project on employee attrition, delivering insights that informed HR retention strategy for leadership</li>
+                    <li>Shipped features end-to-end — from requirements through production deployment — in close collaboration with senior engineers, QA, and product stakeholders</li>
+                </ul>
+                <div class="job-tags">
+                    <span class="jtag">Salesforce</span>
+                    <span class="jtag">Apex</span>
+                    <span class="jtag">LWC</span>
+                    <span class="jtag">JavaScript</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="section">
+            <div class="section-title">Education</div>
+
+            <div class="edu-item">
+                <div class="edu-degree">
+                    Master of Science
+                    <span class="edu-badge">In Progress</span>
+                </div>
+                <div class="edu-field">Artificial Intelligence &amp; Machine Learning</div>
+                <div class="edu-school">Currently Enrolled</div>
+            </div>
+
+            <div class="edu-item">
+                <div class="edu-degree">Bachelor of Science — Computer Science</div>
+                <div class="edu-field">University of Tennessee, Chattanooga</div>
+                <div class="edu-year">2019 – 2022 &nbsp;·&nbsp; Chattanooga, TN</div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ══ SIDEBAR ══ -->
+    <aside class="sidebar">
+
+        <!-- Key Achievements -->
+        <section class="section">
+            <div class="section-title">Key Achievements</div>
+
+            <div class="achievement">
+                <div class="ach-title"><span class="ach-star">★</span> Hackathon Winner</div>
+                <p class="ach-body">
+                    Designed and shipped an enterprise RAG chatbot using React, Pinecone vector search, and GPT-4 — making 10,000+ business rules queryable in plain English. Won company-wide competition.
+                </p>
+            </div>
+
+            <div class="achievement">
+                <div class="ach-title"><span class="ach-star">★</span> 90% Testing Efficiency Gain</div>
+                <p class="ach-body">
+                    Led initiative that cut testing time for a critical business process by ~90%, enabling faster releases and reducing manual QA burden across the team.
+                </p>
+            </div>
+
+            <div class="achievement">
+                <div class="ach-title"><span class="ach-star">★</span> Legacy Modernization</div>
+                <p class="ach-body">
+                    Led full React.js migration of business-critical ASP.NET applications, achieving ~60% reduction in feature development time.
+                </p>
+            </div>
+
+            <div class="achievement">
+                <div class="ach-title"><span class="ach-star">★</span> Undergraduate Research Award</div>
+                <p class="ach-body">
+                    Recognized for senior capstone project — a web application enabling approved users to schedule time on particle accelerators.
+                </p>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="section">
+            <div class="section-title">Skills</div>
+
+            <div class="skill-group">
+                <div class="skill-group-title">AI / Machine Learning</div>
+                <div class="skill-list">
+                    <span class="skill-chip primary">PyTorch</span>
+                    <span class="skill-chip primary">HuggingFace</span>
+                    <span class="skill-chip primary">LangChain</span>
+                    <span class="skill-chip primary">Pinecone DB</span>
+                    <span class="skill-chip primary">OpenAI API</span>
+                    <span class="skill-chip">RAG Systems</span>
+                    <span class="skill-chip">scikit-learn</span>
+                    <span class="skill-chip">LoRA / QLoRA</span>
+                    <span class="skill-chip">TensorFlow</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <div class="skill-group-title">Languages</div>
+                <div class="skill-list">
+                    <span class="skill-chip primary">Python</span>
+                    <span class="skill-chip primary">JavaScript</span>
+                    <span class="skill-chip primary">TypeScript</span>
+                    <span class="skill-chip primary">SQL</span>
+                    <span class="skill-chip">C#</span>
+                    <span class="skill-chip">COBOL</span>
+                    <span class="skill-chip">Apex</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <div class="skill-group-title">Frontend &amp; Mobile</div>
+                <div class="skill-list">
+                    <span class="skill-chip primary">React.js</span>
+                    <span class="skill-chip primary">React Native</span>
+                    <span class="skill-chip primary">Node.js</span>
+                    <span class="skill-chip">.NET Core</span>
+                    <span class="skill-chip">ASP.NET</span>
+                    <span class="skill-chip">Next.js</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <div class="skill-group-title">DevOps &amp; Tools</div>
+                <div class="skill-list">
+                    <span class="skill-chip primary">Azure DevOps</span>
+                    <span class="skill-chip primary">GitHub</span>
+                    <span class="skill-chip primary">Octopus Deploy</span>
+                    <span class="skill-chip">JFrog</span>
+                    <span class="skill-chip">Docker</span>
+                </div>
+            </div>
+
+            <div class="skill-group">
+                <div class="skill-group-title">Testing &amp; Databases</div>
+                <div class="skill-list">
+                    <span class="skill-chip primary">Selenium</span>
+                    <span class="skill-chip primary">Jest</span>
+                    <span class="skill-chip">MSTest</span>
+                    <span class="skill-chip primary">SQL Server</span>
+                </div>
+            </div>
+        </section>
+
+    </aside>
+
+</div>
+
+</body>
+</html>
