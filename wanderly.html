@@ -1,0 +1,601 @@
+<title>Wanderly — Case Study</title>
+<style>
+  :root {
+    --bg:          #050c18;
+    --bg-2:        #091221;
+    --bg-card:     #0d1a2e;
+    --bg-card-2:   #0f1f38;
+    --accent:      #00d4ff;
+    --accent-dim:  rgba(0, 212, 255, 0.15);
+    --accent-glow: rgba(0, 212, 255, 0.25);
+    --purple:      #7c3aed;
+    --purple-lt:   #a78bfa;
+    --purple-dim:  rgba(124, 58, 237, 0.16);
+    --text:        #e2e8f0;
+    --text-2:      #94a3b8;
+    --text-3:      #64748b;
+    --border:      rgba(0, 212, 255, 0.12);
+    --border-2:    rgba(255, 255, 255, 0.06);
+    --radius:      12px;
+    --radius-sm:   8px;
+    --font:        'Inter', system-ui, -apple-system, sans-serif;
+    --mono:        'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    --measure:     68ch;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  .col   { max-width: var(--measure); }
+
+  /* ── Hero ─────────────────────────────── */
+  .hero {
+    position: relative;
+    padding: 72px 0 56px;
+    border-bottom: 1px solid var(--border-2);
+    background:
+      radial-gradient(900px 380px at 12% -10%, rgba(0,212,255,0.10), transparent 70%),
+      radial-gradient(700px 340px at 88% 0%, rgba(124,58,237,0.12), transparent 70%),
+      var(--bg);
+  }
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  .back {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-3); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 7px; margin-bottom: 34px;
+    transition: color 0.25s;
+  }
+  .back:hover { color: var(--accent); }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 14px;
+  }
+  .hero-title {
+    font-size: clamp(2.6rem, 6vw, 4rem); line-height: 1.04; letter-spacing: -0.03em;
+    font-weight: 700; text-wrap: balance; margin-bottom: 18px;
+  }
+  .thesis {
+    font-size: clamp(1.05rem, 2vw, 1.28rem); color: var(--text-2);
+    max-width: 60ch; line-height: 1.6;
+  }
+  .thesis strong { color: var(--text); font-weight: 600; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .chip {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em;
+    padding: 5px 11px; border-radius: 999px;
+    border: 1px solid var(--border-2); color: var(--text-2); background: rgba(255,255,255,0.02);
+  }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.03em;
+    padding: 10px 18px; border-radius: var(--radius-sm); text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  .btn-primary { background: var(--accent-dim); border: 1px solid rgba(0,212,255,0.32); color: var(--accent); }
+  .btn-primary:hover { background: rgba(0,212,255,0.24); box-shadow: 0 0 18px var(--accent-glow); transform: translateY(-1px); }
+  .btn-ghost { border: 1px solid var(--border-2); color: var(--text-2); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  /* ── Demo slot ────────────────────────── */
+  .demo-slot {
+    margin-top: 44px; border: 1px dashed rgba(0,212,255,0.28); border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(0,212,255,0.05), transparent);
+    padding: 52px 24px; text-align: center;
+  }
+  .demo-slot p { font-family: var(--mono); font-size: 0.78rem; color: var(--text-3); }
+  .demo-slot p + p { margin-top: 6px; }
+
+  /* ── Metrics ──────────────────────────── */
+  .metrics {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    border-top: 1px solid var(--border-2); border-bottom: 1px solid var(--border-2);
+  }
+  .metric { padding: 30px 20px; border-right: 1px solid var(--border-2); }
+  .metric:last-child { border-right: none; }
+  .mval {
+    display: block; font-family: var(--mono); font-size: 1.85rem; font-weight: 600;
+    color: var(--accent); letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+  }
+  .mlbl {
+    display: block; font-size: 0.76rem; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.09em; margin-top: 6px;
+  }
+
+  /* ── Sections ─────────────────────────── */
+  .sec { padding: 76px 0; border-bottom: 1px solid var(--border-2); }
+  .sec:last-of-type { border-bottom: none; }
+  .sec-head { margin-bottom: 30px; }
+  .sec-title {
+    font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -0.02em;
+    font-weight: 650; text-wrap: balance;
+  }
+  .prose { color: var(--text-2); font-size: 1rem; }
+  .prose + .prose { margin-top: 17px; }
+  .prose strong { color: var(--text); font-weight: 600; }
+  .prose em { color: var(--text); font-style: italic; }
+
+  /* ── Pipeline ─────────────────────────── */
+  .legend { display: flex; flex-wrap: wrap; gap: 22px; margin-bottom: 32px; }
+  .legend-item { display: flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 0.73rem; color: var(--text-2); }
+  .swatch { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
+  .sw-model { background: var(--purple); box-shadow: 0 0 10px rgba(124,58,237,0.55); }
+  .sw-det   { background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+
+  .pipe { display: flex; flex-direction: column; gap: 0; }
+  .stage {
+    display: grid; grid-template-columns: 58px 1fr; gap: 20px;
+    position: relative; padding-bottom: 26px;
+  }
+  .stage:last-child { padding-bottom: 0; }
+  .stage-rail { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .stage-num {
+    font-family: var(--mono); font-size: 0.74rem; font-weight: 600;
+    width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border-2); background: var(--bg-card); color: var(--text-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .stage.is-model .stage-num { border-color: rgba(124,58,237,0.5); color: var(--purple-lt); }
+  .stage.is-det   .stage-num { border-color: rgba(0,212,255,0.42); color: var(--accent); }
+  .stage.is-both  .stage-num { border-color: rgba(255,255,255,0.18); color: var(--text); }
+  .stage-line { flex: 1; width: 1px; background: var(--border-2); margin-top: 8px; }
+  .stage:last-child .stage-line { display: none; }
+
+  .stage-body {
+    background: var(--bg-card); border: 1px solid var(--border-2);
+    border-radius: var(--radius); padding: 18px 20px;
+  }
+  .stage.is-model .stage-body { border-left: 2px solid var(--purple); }
+  .stage.is-det   .stage-body { border-left: 2px solid var(--accent); }
+  .stage.is-both  .stage-body { border-left: 2px solid; border-image: linear-gradient(180deg, var(--purple), var(--accent)) 1; }
+
+  .stage-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 7px; }
+  .stage-name { font-size: 1.02rem; font-weight: 600; letter-spacing: -0.01em; }
+  .tag {
+    font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.09em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+  }
+  .tag-model { background: var(--purple-dim); color: var(--purple-lt); border: 1px solid rgba(124,58,237,0.34); }
+  .tag-det   { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(0,212,255,0.3); }
+  .stage-desc { font-size: 0.92rem; color: var(--text-2); }
+  .stage-desc code {
+    font-family: var(--mono); font-size: 0.84em; color: var(--accent);
+    background: rgba(0,212,255,0.08); padding: 1px 5px; border-radius: 3px;
+  }
+
+  .substages { list-style: none; margin-top: 13px; display: flex; flex-direction: column; gap: 8px; }
+  .substages li {
+    display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: baseline;
+    font-size: 0.88rem; color: var(--text-2);
+    padding-top: 8px; border-top: 1px solid var(--border-2);
+  }
+  .substages b {
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--accent); font-weight: 500; white-space: nowrap;
+  }
+
+  /* ── Compare ──────────────────────────── */
+  .compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 8px; }
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border-2);
+    border-radius: var(--radius); padding: 20px;
+  }
+  .card-label {
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.11em;
+    text-transform: uppercase; margin-bottom: 13px; display: block;
+  }
+  .card-draft .card-label { color: var(--purple-lt); }
+  .card-ship  .card-label { color: var(--accent); }
+  .card-draft { border-left: 2px solid var(--purple); }
+  .card-ship  { border-left: 2px solid var(--accent); }
+  .kv { display: flex; flex-direction: column; gap: 9px; font-family: var(--mono); font-size: 0.8rem; }
+  .kv div { display: flex; gap: 9px; flex-wrap: wrap; }
+  .kv span { color: var(--text-3); min-width: 74px; }
+  .kv b { font-weight: 500; color: var(--text-2); }
+  .ok   { color: var(--accent) !important; }
+  .bad  { color: #f472b6 !important; text-decoration: line-through; }
+
+  /* ── Callout ──────────────────────────── */
+  .callout {
+    background: linear-gradient(135deg, rgba(124,58,237,0.10), rgba(0,212,255,0.06));
+    border: 1px solid rgba(124,58,237,0.26); border-radius: var(--radius);
+    padding: 24px 26px; margin-top: 22px;
+  }
+  .callout .card-label { color: var(--purple-lt); }
+  .callout p { color: var(--text-2); font-size: 0.96rem; }
+  .callout p + p { margin-top: 12px; }
+
+  /* ── Lists ────────────────────────────── */
+  .bullets { list-style: none; display: flex; flex-direction: column; gap: 13px; }
+  .bullets li { position: relative; padding-left: 22px; color: var(--text-2); }
+  .bullets li::before {
+    content: ""; position: absolute; left: 0; top: 0.62em;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.75;
+  }
+  .bullets strong { color: var(--text); font-weight: 600; }
+
+  /* ── Stack grid ───────────────────────── */
+  .stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 14px; }
+  .stack-item { background: var(--bg-card); border: 1px solid var(--border-2); border-radius: var(--radius-sm); padding: 15px 17px; }
+  .stack-item h4 {
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.11em; text-transform: uppercase;
+    color: var(--text-3); font-weight: 500; margin-bottom: 7px;
+  }
+  .stack-item p { font-size: 0.88rem; color: var(--text-2); }
+
+  /* ── Footer ───────────────────────────── */
+  .foot { padding: 52px 0 72px; text-align: center; }
+  .foot p { font-family: var(--mono); font-size: 0.74rem; color: var(--text-3); margin-bottom: 20px; }
+
+  @media (max-width: 620px) {
+    .stage { grid-template-columns: 40px 1fr; gap: 14px; }
+    .stage-num { width: 30px; height: 30px; font-size: 0.68rem; }
+    .metric { padding: 22px 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<header class="hero">
+  <div class="wrap">
+    <a class="back" href="index.html">&larr; Back to portfolio</a>
+    <span class="eyebrow">Case Study · 2026</span>
+    <h1 class="hero-title">Wanderly</h1>
+    <p class="thesis">
+      An AI travel planner that generates complete multi-day itineraries from a sentence —
+      built on one rule: <strong>the model writes the draft, deterministic systems verify every
+      fact in it.</strong>
+    </p>
+    <div class="meta-row">
+      <span class="chip">Solo project</span>
+      <span class="chip">React Native · Expo</span>
+      <span class="chip">Firebase Cloud Functions</span>
+      <span class="chip">Claude Sonnet + Haiku</span>
+      <span class="chip">Google Places / Routes</span>
+      <span class="chip">iOS · Android</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/brannon-white/Wanderly" target="_blank" rel="noopener">View source</a>
+      <a class="btn btn-ghost" href="https://github.com/brannon-white/Wanderly/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener">Architecture doc</a>
+    </div>
+    <div class="demo-slot">
+      <p>[ demo.mp4 — silent loop, autoplay ]</p>
+      <p>generate → itinerary → "it's raining" → day rebuilt</p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="metrics">
+    <div class="metric"><span class="mval">6</span><span class="mlbl">Pipeline stages</span></div>
+    <div class="metric"><span class="mval">19</span><span class="mlbl">Cloud Functions</span></div>
+    <div class="metric"><span class="mval">135</span><span class="mlbl">Automated tests</span></div>
+    <div class="metric"><span class="mval">0</span><span class="mlbl">Unverified venues shipped</span></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <section class="sec">
+    <div class="sec-head"><h2 class="sec-title">The problem worth solving</h2></div>
+    <div class="col">
+      <p class="prose">
+        Ask a language model for a travel itinerary and it will hand back something beautiful,
+        confident, and partly fictional. It invents restaurants that closed years ago. It assigns
+        coordinates that land in a parking lot two towns over. It claims a 15-minute walk between
+        places that are forty minutes apart.
+      </p>
+      <p class="prose">
+        For a chatbot that's an annoyance. For a trip planner it's a failure — someone is standing
+        on a street corner in a city they don't know, trusting the output to be true.
+      </p>
+      <p class="prose">
+        So Wanderly never treats the model as a source of facts. The LLM decides <em>structure</em>:
+        what kind of day this should be, how it should be paced, why a place earns its slot. Every
+        checkable claim it makes is then confirmed against an authoritative source — or removed
+        before it ever reaches the screen.
+      </p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title">The generation pipeline</h2>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><span class="swatch sw-model"></span> Generative — the model decides</div>
+      <div class="legend-item"><span class="swatch sw-det"></span> Deterministic — code verifies</div>
+    </div>
+
+    <div class="pipe">
+
+      <div class="stage is-both">
+        <div class="stage-rail"><span class="stage-num">01</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Plan stops</span>
+            <span class="tag tag-model">Model</span>
+            <span class="tag tag-det">Skipped for single-city</span>
+          </div>
+          <p class="stage-desc">
+            A one-city trip needs no reasoning — the destination <em>is</em> the stop, so the LLM call
+            is skipped entirely. Multi-city road trips call the model to choose a route and allocate
+            nights per stop.
+          </p>
+        </div>
+      </div>
+
+      <div class="stage is-det">
+        <div class="stage-rail"><span class="stage-num">02</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Build candidate pools</span>
+            <span class="tag tag-det">Deterministic</span>
+          </div>
+          <p class="stage-desc">
+            Per stop, in parallel: geocode, pull real venues from Google Places across five buckets,
+            and fetch hiking trails from a self-hosted OSM service. Results cache in Firestore for
+            seven days, so a repeat trip to the same city costs nothing.
+          </p>
+          <p class="stage-desc" style="margin-top:10px">
+            The pools are then re-ranked against the traveler's taste profile — <strong>personalization
+            happens in retrieval, not in the prompt</strong>, which makes it inspectable.
+          </p>
+        </div>
+      </div>
+
+      <div class="stage is-model">
+        <div class="stage-rail"><span class="stage-num">03</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Generate the itinerary</span>
+            <span class="tag tag-model">Claude Sonnet</span>
+          </div>
+          <p class="stage-desc">
+            One structured tool-schema call produces the entire trip — every day, every activity,
+            with times, descriptions, and categories. It selects from the real venues supplied above
+            rather than recalling places from training data.
+          </p>
+        </div>
+      </div>
+
+      <div class="stage is-both">
+        <div class="stage-rail"><span class="stage-num">04</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Validate, then repair surgically</span>
+            <span class="tag tag-det">Validator</span>
+            <span class="tag tag-model">Targeted repair</span>
+          </div>
+          <p class="stage-desc">
+            A deterministic validator checks the structural rules the model reliably gets wrong:
+            meals inside real windows, at least seven activities per day, the day running to 8:30 PM,
+            outdoor activities not scheduled after 3 PM, and <strong>at most one hike per day</strong> —
+            it loves stacking three.
+          </p>
+          <p class="stage-desc" style="margin-top:10px">
+            Failures don't trigger a full regeneration. The validator reports <em>which days</em> broke,
+            and only those get a focused repair call — capped at two attempts and bounded by a
+            <code>450s</code> wall-clock budget. Past that the trip ships best-effort. A slightly
+            imperfect itinerary beats a spinner that never resolves.
+          </p>
+        </div>
+      </div>
+
+      <div class="stage is-det">
+        <div class="stage-rail"><span class="stage-num">05</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Ground against reality</span>
+            <span class="tag tag-det">Deterministic</span>
+          </div>
+          <p class="stage-desc">
+            The anti-hallucination layer, run in a deliberate order. Every step is independently
+            fault-tolerant — if an API is unreachable the pipeline keeps its best state and continues
+            rather than failing the request.
+          </p>
+          <ul class="substages">
+            <li><b>Reconcile</b><span>Snap each activity to its real Google Place — authoritative ID, coordinates, and map URL replace the model's guesses.</span></li>
+            <li><b>Verify</b><span>Hard gate: anything that can't be matched to a real place or trail is dropped or replaced. A hallucinated venue cannot reach the user.</span></li>
+            <li><b>Cohesion</b><span>Pull cross-city outliers back into the day's cluster, so one day never spans towns hours apart.</span></li>
+            <li><b>Route</b><span>Replace estimated travel times with real Google Routes data between the now-verified coordinates.</span></li>
+            <li><b>Drive legs</b><span>For road trips, attach real duration, distance, and an encoded polyline for the commute card.</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage is-det">
+        <div class="stage-rail"><span class="stage-num">06</span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Enrich images</span>
+            <span class="tag tag-det">Deterministic</span>
+          </div>
+          <p class="stage-desc">
+            Photos resolve server-side before the "your trip is ready" notification fires, so the
+            itinerary renders complete on open instead of popping in card by card.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title">What grounding actually changes</h2>
+    </div>
+    <div class="col"><p class="prose" style="margin-bottom:26px">
+      A single activity, as the model drafted it versus what the user receives.
+    </p></div>
+    <div class="compare">
+      <div class="card card-draft">
+        <span class="card-label">Model draft</span>
+        <div class="kv">
+          <div><span>venue</span><b>Café Lumière</b></div>
+          <div><span>coords</span><b class="bad">48.8566, 2.3522</b></div>
+          <div><span>place id</span><b class="bad">none</b></div>
+          <div><span>next leg</span><b class="bad">15 min walk</b></div>
+          <div><span>rating</span><b class="bad">4.7 (asserted)</b></div>
+        </div>
+      </div>
+      <div class="card card-ship">
+        <span class="card-label">After grounding</span>
+        <div class="kv">
+          <div><span>venue</span><b>Café Lumière</b></div>
+          <div><span>coords</span><b class="ok">48.8601, 2.3376</b></div>
+          <div><span>place id</span><b class="ok">ChIJ…verified</b></div>
+          <div><span>next leg</span><b class="ok">22 min walk (Routes)</b></div>
+          <div><span>rating</span><b class="ok">4.5 (Places)</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="col"><p class="prose" style="margin-top:22px">
+      And when a venue can't be found at all, it doesn't get shown with a caveat — it gets
+      replaced. The gate has no "probably fine" branch.
+    </p></div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2 class="sec-title">Refining a trip by talking to it</h2></div>
+    <div class="col">
+      <p class="prose">
+        After generation the traveler can restructure the trip in plain language — <em>"it's raining
+        today"</em>, <em>"we're tired"</em>, <em>"make this cheaper"</em>.
+      </p>
+      <p class="prose">
+        The model doesn't rewrite the itinerary. It emits a minimal set of structured mutations
+        (replace, remove, reorder) that are applied deterministically, under two constraints that
+        keep it safe: edits are <strong>clamped to the day being viewed</strong>, so "today" can't churn
+        an unrelated day later in the trip, and <strong>pinned activities are excluded</strong> entirely.
+      </p>
+      <p class="prose">
+        Every edit then re-runs the same grounding passes from stage 5 — a conversationally-inserted
+        venue is held to exactly the same standard as a generated one. These run on Haiku rather than
+        Sonnet: the task is small and structured, and the latency is felt directly by someone waiting
+        on a tap.
+      </p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2 class="sec-title">Running it in production</h2></div>
+    <div class="col">
+      <p class="prose" style="margin-bottom:24px">
+        Every generation spends real money at three vendors, which makes cost and abuse a design
+        problem rather than an afterthought.
+      </p>
+      <ul class="bullets">
+        <li><strong>Firebase App Check</strong> on every endpoint — requests must originate from a genuine app binary, not a script hitting a public function URL.</li>
+        <li><strong>Server-enforced credits</strong> — free tier gets 3 generations and 3 refinements a month. The client's opinion about remaining quota is advisory; the backend is authoritative.</li>
+        <li><strong>Caching at every expensive layer</strong> — Places results in Firestore for 7 days; replacement suggestions in memory for 15 minutes with in-flight deduplication, so a preload and a user tap collapse into one call.</li>
+        <li><strong>Hard quota caps</strong> on Places plus a GCP budget alert as a final backstop.</li>
+      </ul>
+      <div class="callout">
+        <span class="card-label">A bug worth keeping</span>
+        <p>
+          The itinerary screen preloads replacement suggestions for every activity when a day opens,
+          so tapping "find alternatives" feels instant. The suggestion endpoint charged a refinement
+          credit per call.
+        </p>
+        <p>
+          Which meant a free user could burn their <em>entire monthly allowance by scrolling</em> —
+          three credits gone, three LLM calls billed, before they tapped anything at all. The fix
+          separated reads from writes: browsing suggestions is gated but free, and the credit is
+          charged on the confirmed change. It's a good reminder that in credit-metered systems,
+          <strong>when you charge is a product decision, not an implementation detail.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2 class="sec-title">Testing what actually breaks</h2></div>
+    <div class="col">
+      <p class="prose" style="margin-bottom:22px">
+        135 tests, aimed at the pure logic where a regression would be silent and expensive rather
+        than at UI scaffolding that changes weekly.
+      </p>
+      <ul class="bullets">
+        <li><strong>Verification gate</strong> — unverifiable venues must not survive reconciliation.</li>
+        <li><strong>Mutation scoping</strong> — a day-scoped edit must never touch another day.</li>
+        <li><strong>Validation rules</strong> — meal windows, activity floors, the one-hike-per-day constraint.</li>
+        <li><strong>Schedule reflow</strong> — re-timing a day must stay feasible against real travel times.</li>
+        <li><strong>Directions precedence</strong> — place ID beats name beats coordinates, because coordinates were the original bug.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2 class="sec-title">Stack</h2></div>
+    <div class="stack">
+      <div class="stack-item"><h4>Mobile</h4><p>React Native (Expo), TypeScript, expo-router, react-native-maps</p></div>
+      <div class="stack-item"><h4>Backend</h4><p>Firebase Cloud Functions on Node 20, TypeScript, Zod schemas</p></div>
+      <div class="stack-item"><h4>AI</h4><p>Claude Sonnet for generation, Claude Haiku for interactive edits</p></div>
+      <div class="stack-item"><h4>Geo</h4><p>Google Places, Google Routes, self-hosted OSM trail service</p></div>
+      <div class="stack-item"><h4>Data &amp; auth</h4><p>Firestore, Firebase Auth, Google Sign-In, Cloud Messaging</p></div>
+      <div class="stack-item"><h4>Commerce</h4><p>RevenueCat subscriptions and consumable credit packs</p></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2 class="sec-title">What I'd do differently</h2></div>
+    <div class="col">
+      <p class="prose">
+        <strong>The pipeline got simpler, and it should have started that way.</strong> An earlier version
+        ran seven stages including a separate intent-extraction pass and k-means clustering to group
+        venues geographically. It was replaced by a single generation call over a well-built candidate
+        pool — fewer moving parts, fewer failure modes, better output. Most of the complexity was
+        solving problems that better retrieval made disappear.
+      </p>
+      <p class="prose">
+        <strong>Grounding should be one composable pass, not five sequential ones.</strong> The verification
+        steps each re-walk the itinerary independently. That's readable but wasteful, and the ordering
+        dependencies between them live in comments rather than in types.
+      </p>
+      <p class="prose">
+        <strong>Generation latency is still the weak point.</strong> Multi-city trips can take minutes.
+        Streaming days back as they finish — rather than waiting for the whole trip plus repair passes —
+        would change how the wait feels far more than shaving seconds off the model call.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Brannon White · 2026</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn btn-primary" href="https://github.com/brannon-white/Wanderly" target="_blank" rel="noopener">View source</a>
+      <a class="btn btn-ghost" href="index.html">Back to portfolio</a>
+    </div>
+  </div>
+</footer>
