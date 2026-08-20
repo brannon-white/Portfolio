@@ -1,0 +1,6 @@
+# macOS
+.DS_Store
+
+# Raw screen-recording sources — the encoded MP4 in assets/ is what ships
+*.mov
+*.MOV
