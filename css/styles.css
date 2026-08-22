@@ -882,44 +882,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     border-radius: 10px;
     font-weight: 500;
     transition: all var(--transition);
-}
-
-.stag.adv {
     background: var(--accent-dim);
     color: var(--accent);
     border: 1px solid rgba(42, 82, 160, 0.4);
 }
-.stag.adv:hover { background: rgba(42, 82, 160, 0.2); }
-
-.stag.mid {
-    background: var(--gold-dim);
-    color: var(--gold);
-    border: 1px solid rgba(180, 121, 26, 0.4);
-}
-.stag.mid:hover { background: rgba(180, 121, 26, 0.22); }
-
-.skill-legend {
-    display: flex;
-    gap: 22px;
-    justify-content: flex-end;
-}
-
-.leg-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.78rem;
-    color: var(--ink-3);
-}
-
-.leg-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    border: 1px solid var(--line-strong);
-}
-.leg-dot.adv { background: var(--accent); }
-.leg-dot.mid { background: var(--gold); }
+.stag:hover { background: rgba(42, 82, 160, 0.2); }
 
 /* ═══════════════════════════════════════
    Education
