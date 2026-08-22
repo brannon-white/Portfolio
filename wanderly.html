@@ -1,35 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wanderly — Case Study</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23c7c5ba'/%3E%3Crect x='1' y='1' width='14' height='11' fill='%23fbfaf5' stroke='%231c1c18'/%3E%3Ccircle cx='5.5' cy='6' r='1' fill='%231c1c18'/%3E%3Ccircle cx='10.5' cy='6' r='1' fill='%231c1c18'/%3E%3Cpath d='M5 8.5 Q8 10.5 11 8.5' stroke='%231c1c18' fill='none'/%3E%3Crect x='6' y='12' width='4' height='2' fill='%234d4c44'/%3E%3Crect x='4' y='14' width='8' height='1' fill='%231c1c18'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:          #050c18;
-    --bg-2:        #091221;
-    --bg-card:     #0d1a2e;
-    --bg-card-2:   #0f1f38;
-    --accent:      #00d4ff;
-    --accent-dim:  rgba(0, 212, 255, 0.15);
-    --accent-glow: rgba(0, 212, 255, 0.25);
-    --purple:      #7c3aed;
-    --purple-lt:   #a78bfa;
-    --purple-dim:  rgba(124, 58, 237, 0.16);
-    --text:        #e2e8f0;
-    --text-2:      #94a3b8;
-    --text-3:      #64748b;
-    --border:      rgba(0, 212, 255, 0.12);
-    --border-2:    rgba(255, 255, 255, 0.06);
-    --radius:      12px;
-    --radius-sm:   8px;
-    --font:        'Inter', system-ui, -apple-system, sans-serif;
-    --mono:        'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-    --measure:     68ch;
+    --bg:          #c7c5ba;
+    --bg-2:        #d6d3c6;
+    --bg-card:     #fbfaf5;
+    --bg-card-2:   #efece1;
+    --accent:      #2a52a0;
+    --accent-hi:   #4472c4;
+    --accent-dim:  rgba(42, 82, 160, 0.12);
+    --accent-glow: rgba(42, 82, 160, 0.3);
+    --gold:        #b4791a;
+    --gold-dim:    rgba(180, 121, 26, 0.14);
+    --rainbow:     linear-gradient(90deg, #ec4136, #f2941f, #f7d117, #45b649, #369ce0, #7d4ac9);
+    --titlebar-alt: repeating-linear-gradient(180deg, #ffffff 0px, #ffffff 2px, #d8d5c8 2px, #d8d5c8 3px);
+    --text:        #1c1c18;
+    --text-2:      #4d4c44;
+    --text-3:      #7d7b6f;
+    --border:      #8f8d7f;
+    --border-2:    rgba(35, 35, 32, 0.16);
+    --line-strong: #232320;
+    --radius:      9px;
+    --radius-sm:   5px;
+    --shadow:      2px 3px 0 rgba(0,0,0,0.12), 0 6px 16px rgba(0,0,0,0.16);
+    --shadow-lg:   3px 4px 0 rgba(0,0,0,0.14), 0 14px 34px rgba(0,0,0,0.22);
+    --font:        'Geneva', 'Verdana', 'Tahoma', system-ui, sans-serif;
+    --font-pixel:  'Silkscreen', 'Monaco', 'Courier New', monospace;
+    --mono:        'Monaco', 'Courier New', monospace;
+    --measure:     66ch;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: var(--font);
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 4px 4px;
     color: var(--text);
-    line-height: 1.65;
+    line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
@@ -40,223 +57,224 @@
   .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
   .col   { max-width: var(--measure); }
 
+  /* ── Window chrome ────────────────────── */
+  .win { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; }
+  .win-bar { height: 30px; display: flex; align-items: center; gap: 8px; padding: 0 10px; background: var(--titlebar-alt); border-bottom: 1px solid var(--line-strong); position: relative; }
+  .win-box { width: 12px; height: 12px; border: 1px solid var(--line-strong); border-radius: 2px; background: linear-gradient(180deg, #fff, #c7c7c7); flex-shrink: 0; }
+  .win-box.zoom { margin-left: auto; }
+  .win-title { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--font-pixel); font-size: 0.68rem; font-weight: 700; background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 3px; padding: 3px 12px; white-space: nowrap; max-width: 62%; overflow: hidden; text-overflow: ellipsis; }
+  .win-body { padding: 40px; }
+  .wrap.win { padding: 0; margin-top: 24px; margin-bottom: 24px; }
+  .wrap.win .win-body { padding: 32px 40px 40px; }
+
   /* ── Hero ─────────────────────────────── */
   .hero {
     position: relative;
-    padding: 72px 0 56px;
-    border-bottom: 1px solid var(--border-2);
-    background:
-      radial-gradient(900px 380px at 12% -10%, rgba(0,212,255,0.10), transparent 70%),
-      radial-gradient(700px 340px at 88% 0%, rgba(124,58,237,0.12), transparent 70%),
-      var(--bg);
-  }
-  .hero::after {
-    content: "";
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
-    background-size: 44px 44px;
-    pointer-events: none;
+    padding: 90px 0 56px;
+    background-color: var(--bg);
+    background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 5px 5px;
   }
   .hero > * { position: relative; z-index: 1; }
 
   .back {
-    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
-    text-transform: uppercase; color: var(--text-3); text-decoration: none;
-    display: inline-flex; align-items: center; gap: 7px; margin-bottom: 34px;
-    transition: color 0.25s;
+    font-family: var(--font-pixel); font-size: 0.66rem; letter-spacing: 0.03em;
+    text-transform: uppercase; color: var(--text-2); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 7px; margin-bottom: 28px;
+    transition: color 0.2s;
   }
   .back:hover { color: var(--accent); }
 
   .eyebrow {
-    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 14px;
+    font-family: var(--mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.02em;
+    text-transform: uppercase; color: var(--accent); display: inline-block; margin-bottom: 16px;
+    background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 3px; padding: 3px 10px;
   }
   .hero-title {
-    font-size: clamp(2.6rem, 6vw, 4rem); line-height: 1.04; letter-spacing: -0.03em;
-    font-weight: 700; text-wrap: balance; margin-bottom: 18px;
+    font-size: clamp(2.1rem, 5vw, 3.1rem); line-height: 1.08; letter-spacing: -0.01em;
+    font-weight: 700; text-wrap: balance; margin-bottom: 16px; color: var(--text);
   }
   .thesis {
-    font-size: clamp(1.05rem, 2vw, 1.28rem); color: var(--text-2);
+    font-size: clamp(1rem, 2vw, 1.15rem); color: var(--text-2);
     max-width: 60ch; line-height: 1.6;
   }
-  .thesis strong { color: var(--text); font-weight: 600; }
+  .thesis strong { color: var(--text); font-weight: 700; }
 
-  .meta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
   .chip {
-    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em;
-    padding: 5px 11px; border-radius: 999px;
-    border: 1px solid var(--border-2); color: var(--text-2); background: rgba(255,255,255,0.02);
+    font-family: var(--font-pixel); font-size: 0.62rem; letter-spacing: 0.02em;
+    padding: 5px 11px; border-radius: 10px;
+    border: 1px solid var(--line-strong); color: var(--text-2); background: var(--bg-card);
   }
 
-  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
-    font-family: var(--mono); font-size: 0.76rem; letter-spacing: 0.03em;
-    padding: 10px 18px; border-radius: var(--radius-sm); text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    font-family: var(--font-pixel); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.02em;
+    padding: 9px 18px; border-radius: 14px; text-decoration: none;
+    border: 1px solid var(--line-strong);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 1px 2px 0 rgba(0,0,0,0.1);
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
   }
-  .btn-primary { background: var(--accent-dim); border: 1px solid rgba(0,212,255,0.32); color: var(--accent); }
-  .btn-primary:hover { background: rgba(0,212,255,0.24); box-shadow: 0 0 18px var(--accent-glow); transform: translateY(-1px); }
-  .btn-ghost { border: 1px solid var(--border-2); color: var(--text-2); }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: linear-gradient(180deg, var(--accent-hi), var(--accent)); color: #fff; border-color: #16305c; }
+  .btn-ghost { background: linear-gradient(180deg, #fff, #d6d4c8); color: var(--text); }
 
   /* ── Demo slot ────────────────────────── */
   .demo-frame {
-    max-width: 330px; margin: 46px auto 0;
-    border: 1px solid var(--border); border-radius: 22px; overflow: hidden;
-    background: var(--bg-card);
-    box-shadow: 0 18px 50px rgba(0,0,0,0.55), 0 0 34px rgba(0,212,255,0.10);
-    aspect-ratio: 9 / 19.5;
+    max-width: 420px; margin: 42px auto 0;
+    border: 1px solid var(--line-strong); border-radius: 20px; overflow: hidden;
+    background: var(--text);
+    box-shadow: var(--shadow-lg);
+    aspect-ratio: 9 / 18.5;
   }
   .demo-video { display: block; width: 100%; height: 100%; object-fit: cover; }
   .demo-caption {
     text-align: center; margin-top: 14px;
-    font-family: var(--mono); font-size: 0.72rem; color: var(--text-3);
+    font-family: var(--font-pixel); font-size: 0.64rem; color: var(--text-3);
   }
 
   /* ── Metrics ──────────────────────────── */
   .metrics {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    border-top: 1px solid var(--border-2); border-bottom: 1px solid var(--border-2);
+    background: var(--bg-card);
+    border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong);
   }
-  .metric { padding: 30px 20px; border-right: 1px solid var(--border-2); }
+  .metric { padding: 26px 20px; border-right: 1px solid var(--border-2); }
   .metric:last-child { border-right: none; }
   .mval {
-    display: block; font-family: var(--mono); font-size: 1.85rem; font-weight: 600;
-    color: var(--accent); letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+    display: block; font-family: var(--mono); font-size: 1.6rem; font-weight: 700;
+    color: var(--accent); letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
   }
   .mlbl {
-    display: block; font-size: 0.76rem; color: var(--text-3);
-    text-transform: uppercase; letter-spacing: 0.09em; margin-top: 6px;
+    display: block; font-size: 0.72rem; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px;
   }
 
   /* ── Sections ─────────────────────────── */
-  .sec { padding: 76px 0; border-bottom: 1px solid var(--border-2); }
+  .sec { padding: 64px 0; border-bottom: 1px solid var(--border-2); }
   .sec:last-of-type { border-bottom: none; }
-  .sec-head { margin-bottom: 30px; }
+  .sec-head { margin-bottom: 26px; }
   .sec-title {
-    font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -0.02em;
-    font-weight: 650; text-wrap: balance;
+    font-size: clamp(1.35rem, 2.6vw, 1.7rem); line-height: 1.25; letter-spacing: -0.01em;
+    font-weight: 700; text-wrap: balance; color: var(--text);
   }
-  .prose { color: var(--text-2); font-size: 1rem; }
-  .prose + .prose { margin-top: 17px; }
-  .prose strong { color: var(--text); font-weight: 600; }
+  .prose { color: var(--text-2); font-size: 0.97rem; }
+  .prose + .prose { margin-top: 14px; }
+  .prose strong { color: var(--text); font-weight: 700; }
   .prose em { color: var(--text); font-style: italic; }
 
   /* ── Pipeline ─────────────────────────── */
-  .legend { display: flex; flex-wrap: wrap; gap: 22px; margin-bottom: 32px; }
-  .legend-item { display: flex; align-items: center; gap: 9px; font-family: var(--mono); font-size: 0.73rem; color: var(--text-2); }
-  .swatch { width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; }
-  .sw-model { background: var(--purple); box-shadow: 0 0 10px rgba(124,58,237,0.55); }
-  .sw-det   { background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+  .legend { display: flex; flex-wrap: wrap; gap: 22px; margin-bottom: 28px; }
+  .legend-item { display: flex; align-items: center; gap: 9px; font-family: var(--font-pixel); font-size: 0.66rem; color: var(--text-2); }
+  .swatch { width: 11px; height: 11px; border-radius: 2px; border: 1px solid var(--line-strong); flex-shrink: 0; }
+  .sw-model { background: var(--gold); }
+  .sw-det   { background: var(--accent); }
 
   .pipe { display: flex; flex-direction: column; gap: 0; }
   .stage {
     display: grid; grid-template-columns: 58px 1fr; gap: 20px;
-    position: relative; padding-bottom: 26px;
+    position: relative; padding-bottom: 22px;
   }
   .stage:last-child { padding-bottom: 0; }
   .stage-rail { position: relative; display: flex; flex-direction: column; align-items: center; }
   .stage-num {
-    font-family: var(--mono); font-size: 0.74rem; font-weight: 600;
-    width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+    font-family: var(--mono); font-size: 0.76rem; font-weight: 700;
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    border: 1px solid var(--border-2); background: var(--bg-card); color: var(--text-2);
+    border: 1px solid var(--line-strong); background: var(--bg-card); color: var(--text-2);
     font-variant-numeric: tabular-nums;
   }
-  .stage.is-model .stage-num { border-color: rgba(124,58,237,0.5); color: var(--purple-lt); }
-  .stage.is-det   .stage-num { border-color: rgba(0,212,255,0.42); color: var(--accent); }
-  .stage.is-both  .stage-num { border-color: rgba(255,255,255,0.18); color: var(--text); }
-  .stage-line { flex: 1; width: 1px; background: var(--border-2); margin-top: 8px; }
+  .stage.is-model .stage-num { color: var(--gold); }
+  .stage.is-det   .stage-num { color: var(--accent); }
+  .stage.is-both  .stage-num { color: var(--text); }
+  .stage-line { flex: 1; width: 1px; background: var(--line); margin-top: 8px; }
   .stage:last-child .stage-line { display: none; }
 
   .stage-body {
-    background: var(--bg-card); border: 1px solid var(--border-2);
-    border-radius: var(--radius); padding: 18px 20px;
+    background: var(--bg-card); border: 1px solid var(--line-strong);
+    border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow);
   }
-  .stage.is-model .stage-body { border-left: 2px solid var(--purple); }
-  .stage.is-det   .stage-body { border-left: 2px solid var(--accent); }
-  .stage.is-both  .stage-body { border-left: 2px solid; border-image: linear-gradient(180deg, var(--purple), var(--accent)) 1; }
+  .stage.is-model .stage-body { border-left: 3px solid var(--gold); }
+  .stage.is-det   .stage-body { border-left: 3px solid var(--accent); }
+  .stage.is-both  .stage-body { border-left: 3px solid; border-image: linear-gradient(180deg, var(--gold), var(--accent)) 1; }
 
   .stage-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 7px; }
-  .stage-name { font-size: 1.02rem; font-weight: 600; letter-spacing: -0.01em; }
+  .stage-name { font-size: 0.98rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
   .tag {
-    font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.09em; text-transform: uppercase;
+    font-family: var(--font-pixel); font-size: 0.6rem; letter-spacing: 0.02em; text-transform: uppercase;
     padding: 3px 8px; border-radius: 4px; white-space: nowrap;
   }
-  .tag-model { background: var(--purple-dim); color: var(--purple-lt); border: 1px solid rgba(124,58,237,0.34); }
-  .tag-det   { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(0,212,255,0.3); }
-  .stage-desc { font-size: 0.92rem; color: var(--text-2); }
+  .tag-model { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(180,121,26,0.4); }
+  .tag-det   { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(42,82,160,0.32); }
+  .stage-desc { font-size: 0.89rem; color: var(--text-2); }
   .stage-desc code {
     font-family: var(--mono); font-size: 0.84em; color: var(--accent);
-    background: rgba(0,212,255,0.08); padding: 1px 5px; border-radius: 3px;
+    background: var(--accent-dim); padding: 1px 5px; border-radius: 3px;
   }
 
-  .substages { list-style: none; margin-top: 13px; display: flex; flex-direction: column; gap: 8px; }
+  .substages { list-style: none; margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
   .substages li {
     display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: baseline;
-    font-size: 0.88rem; color: var(--text-2);
+    font-size: 0.86rem; color: var(--text-2);
     padding-top: 8px; border-top: 1px solid var(--border-2);
   }
   .substages b {
-    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase;
-    color: var(--accent); font-weight: 500; white-space: nowrap;
+    font-family: var(--font-pixel); font-size: 0.64rem; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; white-space: nowrap;
   }
 
   /* ── Compare ──────────────────────────── */
-  .compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 8px; }
+  .compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-top: 8px; }
   .card {
-    background: var(--bg-card); border: 1px solid var(--border-2);
-    border-radius: var(--radius); padding: 20px;
+    background: var(--bg-card); border: 1px solid var(--line-strong);
+    border-radius: var(--radius); padding: 18px; box-shadow: var(--shadow);
   }
   .card-label {
-    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.11em;
-    text-transform: uppercase; margin-bottom: 13px; display: block;
+    font-family: var(--font-pixel); font-size: 0.62rem; letter-spacing: 0.03em;
+    text-transform: uppercase; margin-bottom: 12px; display: block;
   }
-  .card-draft .card-label { color: var(--purple-lt); }
+  .card-draft .card-label { color: var(--gold); }
   .card-ship  .card-label { color: var(--accent); }
-  .card-draft { border-left: 2px solid var(--purple); }
-  .card-ship  { border-left: 2px solid var(--accent); }
-  .kv { display: flex; flex-direction: column; gap: 9px; font-family: var(--mono); font-size: 0.8rem; }
+  .card-draft { border-left: 3px solid var(--gold); }
+  .card-ship  { border-left: 3px solid var(--accent); }
+  .kv { display: flex; flex-direction: column; gap: 9px; font-family: var(--mono); font-size: 0.78rem; }
   .kv div { display: flex; gap: 9px; flex-wrap: wrap; }
   .kv span { color: var(--text-3); min-width: 74px; }
-  .kv b { font-weight: 500; color: var(--text-2); }
+  .kv b { font-weight: 600; color: var(--text-2); }
   .ok   { color: var(--accent) !important; }
-  .bad  { color: #f472b6 !important; text-decoration: line-through; }
+  .bad  { color: #b3261e !important; text-decoration: line-through; }
 
   /* ── Callout ──────────────────────────── */
   .callout {
-    background: linear-gradient(135deg, rgba(124,58,237,0.10), rgba(0,212,255,0.06));
-    border: 1px solid rgba(124,58,237,0.26); border-radius: var(--radius);
-    padding: 24px 26px; margin-top: 22px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(180,121,26,0.4); border-radius: var(--radius);
+    padding: 20px 22px; margin-top: 20px;
   }
-  .callout .card-label { color: var(--purple-lt); }
-  .callout p { color: var(--text-2); font-size: 0.96rem; }
-  .callout p + p { margin-top: 12px; }
+  .callout .card-label { color: var(--gold); }
+  .callout p { color: var(--text-2); font-size: 0.93rem; }
+  .callout p + p { margin-top: 10px; }
 
   /* ── Lists ────────────────────────────── */
-  .bullets { list-style: none; display: flex; flex-direction: column; gap: 13px; }
-  .bullets li { position: relative; padding-left: 22px; color: var(--text-2); }
+  .bullets { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+  .bullets li { position: relative; padding-left: 20px; color: var(--text-2); font-size: 0.94rem; }
   .bullets li::before {
-    content: ""; position: absolute; left: 0; top: 0.62em;
-    width: 6px; height: 6px; border-radius: 50%; background: var(--accent); opacity: 0.75;
+    content: "▸"; position: absolute; left: 0; top: 0; color: var(--accent); font-size: 0.75em;
   }
-  .bullets strong { color: var(--text); font-weight: 600; }
+  .bullets strong { color: var(--text); font-weight: 700; }
 
   /* ── Stack grid ───────────────────────── */
-  .stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 14px; }
-  .stack-item { background: var(--bg-card); border: 1px solid var(--border-2); border-radius: var(--radius-sm); padding: 15px 17px; }
+  .stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 12px; }
+  .stack-item { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 14px 16px; box-shadow: var(--shadow); }
   .stack-item h4 {
-    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.11em; text-transform: uppercase;
-    color: var(--text-3); font-weight: 500; margin-bottom: 7px;
+    font-family: var(--font-pixel); font-size: 0.6rem; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--text-3); font-weight: 700; margin-bottom: 7px;
   }
-  .stack-item p { font-size: 0.88rem; color: var(--text-2); }
+  .stack-item p { font-size: 0.86rem; color: var(--text-2); }
 
   /* ── Footer ───────────────────────────── */
-  .foot { padding: 52px 0 72px; text-align: center; }
-  .foot p { font-family: var(--mono); font-size: 0.74rem; color: var(--text-3); margin-bottom: 20px; }
+  .foot { padding: 44px 0 64px; text-align: center; background: var(--bg-card); border-top: 1px solid var(--line-strong); }
+  .foot p { font-family: var(--mono); font-size: 0.74rem; font-weight: 600; color: var(--text-3); margin-bottom: 18px; }
 
   @media (max-width: 620px) {
     .stage { grid-template-columns: 40px 1fr; gap: 14px; }
@@ -267,14 +285,22 @@
     * { animation: none !important; transition: none !important; }
   }
 </style>
+</head>
+<body>
 
 <header class="hero">
-  <div class="wrap">
+  <div class="wrap win">
+    <div class="win-bar">
+      <span class="win-box"></span>
+      <span class="win-title">Wanderly.app</span>
+      <span class="win-box zoom"></span>
+    </div>
+    <div class="win-body">
     <a class="back" href="index.html">&larr; Back to portfolio</a>
     <span class="eyebrow">Case Study · 2026</span>
     <h1 class="hero-title">Wanderly</h1>
     <p class="thesis">
-      An AI travel planner that generates complete multi-day itineraries from a sentence —
+      An AI travel planner that turns a sentence into a full itinerary —
       built on one rule: <strong>the model writes the draft, deterministic systems verify every
       fact in it.</strong>
     </p>
@@ -297,6 +323,7 @@
       </video>
     </div>
     <p class="demo-caption">generate &rarr; itinerary &rarr; &ldquo;it&rsquo;s raining&rdquo; &rarr; day rebuilt</p>
+    </div>
   </div>
 </header>
 
@@ -315,20 +342,16 @@
     <div class="sec-head"><h2 class="sec-title">The problem worth solving</h2></div>
     <div class="col">
       <p class="prose">
-        Ask a language model for a travel itinerary and it will hand back something beautiful,
-        confident, and partly fictional. It invents restaurants that closed years ago. It assigns
-        coordinates that land in a parking lot two towns over. It claims a 15-minute walk between
-        places that are forty minutes apart.
+        Ask a language model for a travel itinerary and it hands back something beautiful,
+        confident, and partly fictional — restaurants that closed years ago, coordinates in a
+        parking lot two towns over, a "15-minute walk" that's really forty. For a trip planner
+        that's a failure: someone is standing on a street corner trusting the output to be true.
       </p>
       <p class="prose">
-        For a chatbot that's an annoyance. For a trip planner it's a failure — someone is standing
-        on a street corner in a city they don't know, trusting the output to be true.
-      </p>
-      <p class="prose">
-        So Wanderly never treats the model as a source of facts. The LLM decides <em>structure</em>:
-        what kind of day this should be, how it should be paced, why a place earns its slot. Every
-        checkable claim it makes is then confirmed against an authoritative source — or removed
-        before it ever reaches the screen.
+        So Wanderly never treats the model as a source of facts. The LLM decides <em>structure</em> —
+        what kind of day this should be, how it's paced, why a place earns its slot. Every checkable
+        claim it makes is then confirmed against an authoritative source, or removed before it
+        reaches the screen.
       </p>
     </div>
   </section>
@@ -496,19 +519,14 @@
     <div class="col">
       <p class="prose">
         After generation the traveler can restructure the trip in plain language — <em>"it's raining
-        today"</em>, <em>"we're tired"</em>, <em>"make this cheaper"</em>.
+        today"</em>, <em>"we're tired"</em>, <em>"make this cheaper"</em>. The model doesn't rewrite the
+        itinerary; it emits a minimal set of structured mutations (replace, remove, reorder), applied
+        deterministically under two constraints: edits are <strong>clamped to the day being viewed</strong>,
+        and <strong>pinned activities are excluded</strong> entirely.
       </p>
       <p class="prose">
-        The model doesn't rewrite the itinerary. It emits a minimal set of structured mutations
-        (replace, remove, reorder) that are applied deterministically, under two constraints that
-        keep it safe: edits are <strong>clamped to the day being viewed</strong>, so "today" can't churn
-        an unrelated day later in the trip, and <strong>pinned activities are excluded</strong> entirely.
-      </p>
-      <p class="prose">
-        Every edit then re-runs the same grounding passes from stage 5 — a conversationally-inserted
-        venue is held to exactly the same standard as a generated one. These run on Haiku rather than
-        Sonnet: the task is small and structured, and the latency is felt directly by someone waiting
-        on a tap.
+        Every edit re-runs the same grounding passes from stage 5, on Haiku rather than Sonnet — the
+        task is small and structured, and the latency is felt directly by someone waiting on a tap.
       </p>
     </div>
   </section>
@@ -529,16 +547,11 @@
       <div class="callout">
         <span class="card-label">A bug worth keeping</span>
         <p>
-          The itinerary screen preloads replacement suggestions for every activity when a day opens,
-          so tapping "find alternatives" feels instant. The suggestion endpoint charged a refinement
-          credit per call.
-        </p>
-        <p>
-          Which meant a free user could burn their <em>entire monthly allowance by scrolling</em> —
-          three credits gone, three LLM calls billed, before they tapped anything at all. The fix
-          separated reads from writes: browsing suggestions is gated but free, and the credit is
-          charged on the confirmed change. It's a good reminder that in credit-metered systems,
-          <strong>when you charge is a product decision, not an implementation detail.</strong>
+          The itinerary screen preloaded replacement suggestions for every activity on open, so "find
+          alternatives" felt instant — but the suggestion endpoint charged a refinement credit per call.
+          A free user could burn their <em>entire monthly allowance by scrolling</em>, before tapping
+          anything. The fix separated reads from writes: browsing is free, the credit is charged on the
+          confirmed change. <strong>When you charge is a product decision, not an implementation detail.</strong>
         </p>
       </div>
     </div>
@@ -578,20 +591,19 @@
     <div class="col">
       <p class="prose">
         <strong>The pipeline got simpler, and it should have started that way.</strong> An earlier version
-        ran seven stages including a separate intent-extraction pass and k-means clustering to group
-        venues geographically. It was replaced by a single generation call over a well-built candidate
-        pool — fewer moving parts, fewer failure modes, better output. Most of the complexity was
-        solving problems that better retrieval made disappear.
+        ran seven stages, including a separate intent-extraction pass and k-means clustering. A single
+        generation call over a well-built candidate pool replaced it — fewer moving parts, fewer
+        failure modes, better output.
       </p>
       <p class="prose">
-        <strong>Grounding should be one composable pass, not five sequential ones.</strong> The verification
-        steps each re-walk the itinerary independently. That's readable but wasteful, and the ordering
-        dependencies between them live in comments rather than in types.
+        <strong>Grounding should be one composable pass, not five sequential ones.</strong> Each
+        verification step re-walks the itinerary independently — readable, but wasteful, with ordering
+        dependencies living in comments rather than types.
       </p>
       <p class="prose">
         <strong>Generation latency is still the weak point.</strong> Multi-city trips can take minutes.
-        Streaming days back as they finish — rather than waiting for the whole trip plus repair passes —
-        would change how the wait feels far more than shaving seconds off the model call.
+        Streaming days back as they finish would change how the wait feels far more than shaving
+        seconds off the model call.
       </p>
     </div>
   </section>
@@ -607,3 +619,6 @@
     </div>
   </div>
 </footer>
+
+</body>
+</html>

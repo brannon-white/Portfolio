@@ -10,10 +10,11 @@
     <meta property="og:description" content="Software Engineer building intelligent systems at the intersection of software engineering and machine learning.">
     <meta property="og:type" content="website">
     <title>Brannon White | AI/ML Engineer</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23c7c5ba'/%3E%3Crect x='1' y='1' width='14' height='11' fill='%23fbfaf5' stroke='%231c1c18'/%3E%3Ccircle cx='5.5' cy='6' r='1' fill='%231c1c18'/%3E%3Ccircle cx='10.5' cy='6' r='1' fill='%231c1c18'/%3E%3Cpath d='M5 8.5 Q8 10.5 11 8.5' stroke='%231c1c18' fill='none'/%3E%3Crect x='6' y='12' width='4' height='2' fill='%234d4c44'/%3E%3Crect x='4' y='14' width='8' height='1' fill='%231c1c18'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/demos.css">
 </head>
 <body>
@@ -41,35 +42,49 @@
 
     <!-- Hero -->
     <section id="hero" class="hero">
-        <canvas id="neural-canvas"></canvas>
-        <div class="hero-content">
-            <p class="hero-greeting">Hello, I'm</p>
-            <h1 class="hero-name">Brannon White</h1>
-            <div class="hero-title-row">
-                <span class="hero-title" id="typewriter"></span><span class="cursor">|</span>
+        <div class="win hero-window">
+            <div class="win-bar">
+                <span class="win-box"></span>
+                <span class="win-title">Brannon White — System Profile</span>
+                <span class="win-box zoom"></span>
             </div>
-            <p class="hero-desc">
-                Software Engineer II at Unum &nbsp;·&nbsp; M.S. AI &amp; ML Candidate<br>
-                Building intelligent systems where robust engineering meets cutting-edge AI.
-            </p>
-            <div class="hero-actions">
-                <a href="#projects" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-outline">Get In Touch</a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-num">4+</span>
-                    <span class="stat-lbl">Years Experience</span>
+            <div class="hero-content">
+                <svg class="happy-mac" width="44" height="40" viewBox="0 0 44 40" fill="none">
+                    <rect x="1" y="1" width="42" height="32" rx="3" fill="#fbfaf5" stroke="#1c1c18" stroke-width="2"/>
+                    <circle cx="15" cy="15" r="2" fill="#1c1c18"/>
+                    <circle cx="29" cy="15" r="2" fill="#1c1c18"/>
+                    <path d="M13 21 Q22 28 31 21" stroke="#1c1c18" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    <rect x="17" y="33" width="10" height="4" fill="#4d4c44"/>
+                    <rect x="9" y="37" width="26" height="2" fill="#1c1c18"/>
+                </svg>
+                <p class="hero-greeting">Hello, I'm</p>
+                <h1 class="hero-name">Brannon White</h1>
+                <div class="hero-title-row">
+                    <span class="hero-title" id="typewriter"></span><span class="cursor">|</span>
                 </div>
-                <div class="stat-div"></div>
-                <div class="stat">
-                    <span class="stat-num">4</span>
-                    <span class="stat-lbl">AI/ML Projects</span>
+                <p class="hero-desc">
+                    Software Engineer II at Unum &nbsp;·&nbsp; M.S. AI &amp; ML Candidate<br>
+                    Building intelligent systems where robust engineering meets cutting-edge AI.
+                </p>
+                <div class="hero-actions">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-outline">Get In Touch</a>
                 </div>
-                <div class="stat-div"></div>
-                <div class="stat">
-                    <span class="stat-num">90%</span>
-                    <span class="stat-lbl">Testing Efficiency Gain</span>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-num">4+</span>
+                        <span class="stat-lbl">Years Experience</span>
+                    </div>
+                    <div class="stat-div"></div>
+                    <div class="stat">
+                        <span class="stat-num">4</span>
+                        <span class="stat-lbl">AI/ML Projects</span>
+                    </div>
+                    <div class="stat-div"></div>
+                    <div class="stat">
+                        <span class="stat-num">90%</span>
+                        <span class="stat-lbl">Testing Efficiency Gain</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,9 +102,8 @@
             </div>
             <div class="about-grid">
                 <div class="about-text reveal">
-                    <p>I'm a Software Engineer II at Unum with a genuine passion for building intelligent systems. While my professional background spans full-stack development, legacy system modernization, and automated testing, my focus has steadily shifted toward machine learning and AI.</p>
-                    <p>I'm currently pursuing a <strong>Master's degree in Artificial Intelligence and Machine Learning</strong>, diving deep into transformers, reinforcement learning, NLP, and production ML systems. I love working at the boundary where solid software engineering meets cutting-edge AI — building things that are not just intelligent, but reliable, maintainable, and impactful.</p>
-                    <p>I'm actively looking for AI/ML engineering roles where I can apply both my production engineering experience and my growing ML expertise.</p>
+                    <p>I'm a Software Engineer II at Unum with a background in full-stack development and legacy modernization, now shifting steadily toward ML and AI. I'm currently pursuing a <strong>Master's in Artificial Intelligence and Machine Learning</strong>, working through transformers, reinforcement learning, and production ML systems.</p>
+                    <p>I'm actively looking for AI/ML engineering roles where I can put both sides — solid engineering and growing ML depth — to work.</p>
                     <div class="interest-tags">
                         <span class="itag">Large Language Models</span>
                         <span class="itag">RAG Systems</span>
@@ -132,6 +146,40 @@
                 <span class="section-label">02 / Projects</span>
                 <h2 class="section-title">AI &amp; Machine Learning<br>Projects</h2>
             </div>
+            <div class="win spotlight reveal">
+                <div class="win-bar">
+                    <span class="win-box"></span>
+                    <span class="win-title spotlight-bar-title"><span class="spotlight-flag"></span> Wanderly.app</span>
+                    <span class="win-box zoom"></span>
+                </div>
+                <div class="spotlight-body">
+                    <div class="spotlight-media">
+                        <video autoplay loop muted playsinline preload="metadata" poster="assets/wanderly-poster.jpg">
+                            <source src="assets/wanderly-demo.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="spotlight-info">
+                        <span class="spotlight-eyebrow">⭐ Flagship Project</span>
+                        <h3 class="spotlight-title">Wanderly — AI Travel Planner</h3>
+                        <p class="spotlight-desc">
+                            Generates complete multi-day itineraries from a single sentence, then lets travelers reshape them by talking to it. The model drafts — deterministic systems verify every fact before it reaches the screen.
+                        </p>
+                        <div class="spotlight-metrics">
+                            <div class="metric"><span class="mval">6-stage</span><span class="mlbl">AI pipeline</span></div>
+                            <div class="metric"><span class="mval">135</span><span class="mlbl">Tests passing</span></div>
+                            <div class="metric"><span class="mval">0</span><span class="mlbl">Hallucinated venues</span></div>
+                        </div>
+                        <div class="tag-row">
+                            <span class="tag">React Native</span><span class="tag">Claude</span><span class="tag">Firebase</span>
+                            <span class="tag">Google Places</span><span class="tag">TypeScript</span><span class="tag">RevenueCat</span>
+                        </div>
+                        <div class="spotlight-actions">
+                            <a class="btn btn-primary" href="wanderly.html">Read Case Study</a>
+                            <a class="btn btn-outline" href="https://github.com/brannon-white/Wanderly" target="_blank">View Source</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="filter-row reveal">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="llm">LLM / RAG</button>
@@ -140,38 +188,6 @@
                 <button class="filter-btn" data-filter="mlops">MLOps</button>
             </div>
             <div class="projects-grid">
-
-                <div class="project-card featured reveal" data-category="llm">
-                    <div class="project-badge">⭐ Flagship Project</div>
-                    <div class="project-top">
-                        <span class="project-icon">🧭</span>
-                        <div class="project-top-right">
-                            <span class="project-date-badge">2026</span>
-                            <a href="https://github.com/brannon-white/Wanderly" class="gh-link" target="_blank" aria-label="GitHub">
-                                <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                    <h3 class="project-title">Wanderly — AI Travel Planner</h3>
-                    <p class="project-desc">
-                        Full-stack mobile app that generates complete multi-day itineraries from a single sentence, then lets travelers reshape them conversationally. Built on one rule: the LLM writes the draft, deterministic systems verify every fact — every venue is snapped to a real Google Place, and anything unverifiable is dropped before it reaches the user.
-                    </p>
-                    <div class="project-metrics">
-                        <div class="metric"><span class="mval">6-stage</span><span class="mlbl">AI pipeline</span></div>
-                        <div class="metric"><span class="mval">135</span><span class="mlbl">Tests passing</span></div>
-                        <div class="metric"><span class="mval">0</span><span class="mlbl">Hallucinated venues</span></div>
-                    </div>
-                    <div class="project-card-footer">
-                        <div class="tag-row">
-                            <span class="tag">React Native</span><span class="tag">Claude</span><span class="tag">Firebase</span>
-                            <span class="tag">Google Places</span><span class="tag">TypeScript</span><span class="tag">RevenueCat</span>
-                        </div>
-                        <a class="demo-launch-btn" href="wanderly.html" style="text-decoration:none">
-                            <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                            Read Case Study
-                        </a>
-                    </div>
-                </div>
 
                 <div class="project-card reveal" data-category="llm">
                     <div class="project-badge">🏆 Hackathon Winner</div>
@@ -186,7 +202,7 @@
                     </div>
                     <h3 class="project-title">Enterprise RAG Chatbot</h3>
                     <p class="project-desc">
-                        Intelligent conversational AI for querying 10,000+ enterprise business rules using Retrieval-Augmented Generation. Combines Pinecone vector search with GPT-4 generation for accurate, context-aware responses with source attribution.
+                        Conversational search over 10,000+ enterprise business rules — Pinecone vector retrieval feeding GPT-4 generation, with source attribution on every answer.
                     </p>
                     <div class="project-metrics">
                         <div class="metric"><span class="mval">40%</span><span class="mlbl">Faster lookups</span></div>
@@ -217,7 +233,7 @@
                     </div>
                     <h3 class="project-title">Transformer Sentiment Pipeline</h3>
                     <p class="project-desc">
-                        Fine-tuned DistilBERT for multi-class sentiment and intent classification on customer feedback. Includes full end-to-end pipeline: data preprocessing, fine-tuning, Redis-cached inference, and a FastAPI serving layer for production-scale traffic.
+                        Fine-tuned DistilBERT for sentiment and intent on customer feedback, served through a Redis-cached FastAPI layer built for production traffic.
                     </p>
                     <div class="project-metrics">
                         <div class="metric"><span class="mval">94.3%</span><span class="mlbl">Test accuracy</span></div>
@@ -248,7 +264,7 @@
                     </div>
                     <h3 class="project-title">Deep RL Game Agent</h3>
                     <p class="project-desc">
-                        Graduate research project implementing and benchmarking DQN, PPO, and A3C agents across Atari game environments. Includes hyperparameter sensitivity analysis, architecture ablations, and generalization study with TensorBoard visualizations.
+                        Graduate research benchmarking DQN, PPO, and A3C agents across Atari environments, with hyperparameter and architecture ablations tracked in TensorBoard.
                     </p>
                     <div class="project-metrics">
                         <div class="metric"><span class="mval">2.3×</span><span class="mlbl">Human baseline (Breakout)</span></div>
@@ -279,7 +295,7 @@
                     </div>
                     <h3 class="project-title">LoRA Fine-Tuning Framework</h3>
                     <p class="project-desc">
-                        Modular parameter-efficient fine-tuning pipeline using LoRA and QLoRA for domain-specific LLM adaptation. Supports LLaMA, Mistral, and Phi-3 base models with automated experiment tracking via Weights &amp; Biases and configurable quantization levels.
+                        Parameter-efficient fine-tuning pipeline for LLaMA, Mistral, and Phi-3 — LoRA/QLoRA adaptation with configurable quantization and Weights &amp; Biases tracking.
                     </p>
                     <div class="project-metrics">
                         <div class="metric"><span class="mval">73%</span><span class="mlbl">Cost vs full fine-tune</span></div>
@@ -323,12 +339,10 @@
                             <span class="tl-period">2022 – Present</span>
                         </div>
                         <ul class="tl-bullets">
-                            <li>Drove full modernization of business-critical legacy ASP.NET applications to React.js, cutting new feature development time by <strong>~60%</strong> and eliminating years of accumulated technical debt across multiple production systems</li>
-                            <li>Owned end-to-end production releases via Octopus Deploy and Azure DevOps pipelines — managed multi-environment deployments, triaged pipeline failures, and coordinated with stakeholders to maintain release cadence</li>
-                            <li>Designed and championed an automated regression testing framework using Selenium and MSTest that reduced testing time on a high-stakes business process by <strong>~90%</strong>, enabling the team to ship with more speed and confidence</li>
-                            <li>Won company-wide hackathon by architecting and shipping an enterprise RAG chatbot — integrated Pinecone vector search with GPT-4 to make 10,000+ business rules instantly queryable in plain English</li>
-                            <li>Onboarded and mentored multiple interns and new developers, establishing code review standards and engineering best practices that accelerated team ramp-up and improved overall code quality</li>
-                            <li>Implemented COBOL mainframe changes to support new product launches and regulatory requirements, collaborating directly with business stakeholders to meet critical delivery deadlines</li>
+                            <li>Modernized legacy ASP.NET applications to React.js, cutting new feature development time by <strong>~60%</strong></li>
+                            <li>Built an automated regression testing framework (Selenium, MSTest) that cut testing time on a high-stakes business process by <strong>~90%</strong></li>
+                            <li>Won a company-wide hackathon architecting an enterprise RAG chatbot — Pinecone + GPT-4 over 10,000+ business rules</li>
+                            <li>Own end-to-end production releases via Octopus Deploy and Azure DevOps, and mentor interns and new developers on the team</li>
                         </ul>
                         <div class="tag-row">
                             <span class="tag">React.js</span><span class="tag">COBOL</span><span class="tag">Azure DevOps</span>
@@ -349,10 +363,9 @@
                             <span class="tl-period">2022</span>
                         </div>
                         <ul class="tl-bullets">
-                            <li>Architected and deployed a Service-Oriented Architecture server that unified data access across multiple internal applications, eliminating integration silos and simplifying future system expansion</li>
-                            <li>Designed and shipped a .NET application used daily by operations staff, replacing a manual workflow with a purpose-built tool for browsing and retrieving CMS assets</li>
-                            <li>Built and documented RESTful APIs against the company's content management system, enabling programmatic asset retrieval and integration into downstream workflows</li>
-                            <li>Ran requirements discovery sessions with end users and translated business needs into technical specifications, tightening the feedback loop between engineering and operations</li>
+                            <li>Architected a Service-Oriented Architecture server unifying data access across multiple internal applications</li>
+                            <li>Shipped a .NET application used daily by operations staff, replacing a manual CMS asset workflow</li>
+                            <li>Built and documented RESTful APIs against the company's CMS for downstream integrations</li>
                         </ul>
                         <div class="tag-row">
                             <span class="tag">.NET Core</span><span class="tag">C#</span><span class="tag">REST APIs</span><span class="tag">SOA</span>
@@ -372,10 +385,9 @@
                             <span class="tl-period">2022</span>
                         </div>
                         <ul class="tl-bullets">
-                            <li>Built reusable, production-grade Lightning Web Components deployed to a Salesforce platform serving thousands of users, with a focus on component reusability and long-term maintainability</li>
-                            <li>Developed Apex backend logic to surface, validate, and manipulate Salesforce records, integrating tightly with existing platform APIs and data models</li>
-                            <li>Contributed research and data analysis to a cross-functional intern project on employee attrition, delivering insights that informed HR retention strategy for leadership</li>
-                            <li>Shipped features end-to-end — from requirements through production deployment — in close collaboration with senior engineers, QA, and product stakeholders</li>
+                            <li>Built reusable Lightning Web Components deployed to a Salesforce platform serving thousands of users</li>
+                            <li>Developed Apex backend logic to surface, validate, and manipulate Salesforce records</li>
+                            <li>Contributed data analysis to a cross-functional employee-attrition project that informed HR retention strategy</li>
                         </ul>
                         <div class="tag-row">
                             <span class="tag">Salesforce</span><span class="tag">Apex</span><span class="tag">LWC</span><span class="tag">JavaScript</span>
