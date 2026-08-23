@@ -224,26 +224,6 @@ function initNav() {
 }
 
 /* ══════════════════════════════════════
-   Project Filtering
-══════════════════════════════════════ */
-function initFilters() {
-    const btns = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.project-card');
-
-    btns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            btns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const filter = btn.dataset.filter;
-            cards.forEach(card => {
-                const show = filter === 'all' || card.dataset.category === filter;
-                card.style.display = show ? '' : 'none';
-            });
-        });
-    });
-}
-
-/* ══════════════════════════════════════
    Scroll Progress Bar
 ══════════════════════════════════════ */
 function initScrollProgress() {
@@ -286,7 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initReveal();
     initNav();
-    initFilters();
     initScrollProgress();
     initBackToTop();
 });

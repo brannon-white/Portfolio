@@ -608,32 +608,15 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .spotlight-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: auto; padding-top: 16px; }
 
-.filter-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-}
-
-.filter-btn {
-    font-family: var(--font-pixel);
-    font-size: 0.68rem;
-    padding: 7px 16px;
-    border-radius: 12px;
-    border: 1px solid var(--line-strong);
-    background: var(--surface);
-    color: var(--ink-3);
-    transition: all var(--transition);
-}
-.filter-btn:hover, .filter-btn.active {
-    color: var(--accent);
-    background: var(--accent-dim);
-}
-
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+}
+.projects-grid:has(.project-card:only-child) {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+    margin: 0 auto;
 }
 
 .project-card {
@@ -727,6 +710,54 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     font-size: 0.66rem;
     color: var(--ink-3);
     line-height: 1.3;
+}
+
+.project-date-badge {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--ink-3);
+    padding: 3px 9px;
+    border-radius: 4px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    white-space: nowrap;
+}
+
+.project-top-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.project-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.demo-launch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 15px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-dim);
+    border: 1px solid rgba(42,82,160,0.28);
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 0.73rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.demo-launch-btn:hover {
+    background: rgba(42,82,160,0.22);
+    box-shadow: 0 0 16px rgba(42,82,160,0.18);
+    transform: translateY(-1px);
 }
 
 /* ═══════════════════════════════════════
@@ -1241,6 +1272,4 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     .stat-div { display: none; }
     .about-cards { grid-template-columns: 1fr; }
     .project-metrics { gap: 10px; }
-    .filter-row { gap: 7px; }
-    .filter-btn { font-size: 0.64rem; padding: 6px 13px; }
 }
