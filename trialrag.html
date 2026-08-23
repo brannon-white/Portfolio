@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrialRAG — Case Study</title>
+<meta name="description" content="TrialRAG — architecture of a production RAG system over ClinicalTrials.gov data: hybrid retrieval, ablation results, and CI-gated infrastructure on AWS.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23c7c5ba'/%3E%3Crect x='1' y='1' width='14' height='11' fill='%23fbfaf5' stroke='%231c1c18'/%3E%3Ccircle cx='5.5' cy='6' r='1' fill='%231c1c18'/%3E%3Ccircle cx='10.5' cy='6' r='1' fill='%231c1c18'/%3E%3Cpath d='M5 8.5 Q8 10.5 11 8.5' stroke='%231c1c18' fill='none'/%3E%3Crect x='6' y='12' width='4' height='2' fill='%234d4c44'/%3E%3Crect x='4' y='14' width='8' height='1' fill='%231c1c18'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #c7c5ba;
+    --bg-2:        #d6d3c6;
+    --bg-card:     #fbfaf5;
+    --bg-card-2:   #efece1;
+    --accent:      #2a52a0;
+    --accent-hi:   #4472c4;
+    --accent-dim:  rgba(42, 82, 160, 0.12);
+    --accent-glow: rgba(42, 82, 160, 0.3);
+    --gold:        #b4791a;
+    --gold-dim:    rgba(180, 121, 26, 0.14);
+    --red:         #b3261e;
+    --red-dim:     rgba(179, 38, 30, 0.12);
+    --titlebar-alt: repeating-linear-gradient(180deg, #ffffff 0px, #ffffff 2px, #d8d5c8 2px, #d8d5c8 3px);
+    --text:        #1c1c18;
+    --text-2:      #4d4c44;
+    --text-3:      #7d7b6f;
+    --border:      #8f8d7f;
+    --border-2:    rgba(35, 35, 32, 0.16);
+    --line-strong: #232320;
+    --radius:      9px;
+    --radius-sm:   5px;
+    --shadow:      2px 3px 0 rgba(0,0,0,0.12), 0 6px 16px rgba(0,0,0,0.16);
+    --shadow-lg:   3px 4px 0 rgba(0,0,0,0.14), 0 14px 34px rgba(0,0,0,0.22);
+    --font:        'Geneva', 'Verdana', 'Tahoma', system-ui, sans-serif;
+    --font-pixel:  'Silkscreen', 'Monaco', 'Courier New', monospace;
+    --mono:        'Monaco', 'Courier New', monospace;
+    --measure:     70ch;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font);
+    background-color: var(--bg);
+    background-image: radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 4px 4px;
+    color: var(--text);
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+  .col   { max-width: var(--measure); }
+
+  /* ── Window chrome ────────────────────── */
+  .win { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow-lg); overflow: hidden; }
+  .win-bar { height: 30px; display: flex; align-items: center; gap: 8px; padding: 0 10px; background: var(--titlebar-alt); border-bottom: 1px solid var(--line-strong); position: relative; }
+  .win-box { width: 12px; height: 12px; border: 1px solid var(--line-strong); border-radius: 2px; background: linear-gradient(180deg, #fff, #c7c7c7); flex-shrink: 0; }
+  .win-box.zoom { margin-left: auto; }
+  .win-title { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--font-pixel); font-size: 0.68rem; font-weight: 700; background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 3px; padding: 3px 12px; white-space: nowrap; max-width: 62%; overflow: hidden; text-overflow: ellipsis; }
+  .win-body { padding: 34px 40px; }
+  .wrap.win { padding: 0; margin-top: 24px; margin-bottom: 24px; }
+  .wrap.win .win-body { padding: 28px 40px 34px; }
+
+  /* ── Hero ─────────────────────────────── */
+  .hero {
+    position: relative;
+    padding: 70px 0 40px;
+    background-color: var(--bg);
+    background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 5px 5px;
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  .back {
+    font-family: var(--font-pixel); font-size: 0.66rem; letter-spacing: 0.03em;
+    text-transform: uppercase; color: var(--text-2); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 7px; margin-bottom: 24px;
+    transition: color 0.2s;
+  }
+  .back:hover { color: var(--accent); }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.02em;
+    text-transform: uppercase; color: var(--accent); display: inline-block; margin-bottom: 14px;
+    background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: 3px; padding: 3px 10px;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 4.6vw, 2.9rem); line-height: 1.08; letter-spacing: -0.01em;
+    font-weight: 700; text-wrap: balance; margin-bottom: 14px; color: var(--text);
+  }
+  .thesis {
+    font-family: var(--mono); font-size: clamp(0.86rem, 1.6vw, 0.95rem); color: var(--text-2);
+    max-width: 66ch; line-height: 1.6;
+  }
+  .thesis strong { color: var(--text); font-weight: 700; }
+
+  .meta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .chip {
+    font-family: var(--font-pixel); font-size: 0.62rem; letter-spacing: 0.02em;
+    padding: 5px 11px; border-radius: 10px;
+    border: 1px solid var(--line-strong); color: var(--text-2); background: var(--bg-card);
+  }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-pixel); font-size: 0.7rem; font-weight: 700; letter-spacing: 0.02em;
+    padding: 9px 18px; border-radius: 14px; text-decoration: none;
+    border: 1px solid var(--line-strong);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 1px 2px 0 rgba(0,0,0,0.1);
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: linear-gradient(180deg, var(--accent-hi), var(--accent)); color: #fff; border-color: #16305c; }
+  .btn-ghost { background: linear-gradient(180deg, #fff, #d6d4c8); color: var(--text); }
+
+  .note {
+    margin-top: 12px; font-family: var(--mono); font-size: 0.76rem; color: var(--text-3); max-width: 60ch;
+  }
+
+  /* ── Metrics ──────────────────────────── */
+  .metrics {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    background: var(--bg-card);
+    border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong);
+  }
+  .metric { padding: 22px 20px; border-right: 1px solid var(--border-2); }
+  .metric:last-child { border-right: none; }
+  .mval {
+    display: block; font-family: var(--mono); font-size: 1.5rem; font-weight: 700;
+    color: var(--accent); letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
+  }
+  .mlbl {
+    display: block; font-size: 0.7rem; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.06em; margin-top: 5px;
+  }
+
+  /* ── Sections ─────────────────────────── */
+  .sec { padding: 48px 0; border-bottom: 1px solid var(--border-2); }
+  .sec:last-of-type { border-bottom: none; }
+  .sec-head { margin-bottom: 20px; }
+  .sec-title {
+    font-size: clamp(1.2rem, 2.2vw, 1.45rem); line-height: 1.25; letter-spacing: -0.01em;
+    font-weight: 700; text-wrap: balance; color: var(--text);
+  }
+  .sec-sub { font-family: var(--mono); font-size: 0.8rem; color: var(--text-3); margin-top: 6px; }
+  .prose { color: var(--text-2); font-size: 0.92rem; }
+  .prose + .prose { margin-top: 10px; }
+  .prose strong { color: var(--text); font-weight: 700; }
+  .prose code, .stage-desc code, .bullets code {
+    font-family: var(--mono); font-size: 0.84em; color: var(--accent);
+    background: var(--accent-dim); padding: 1px 5px; border-radius: 3px;
+  }
+
+  /* ── Diagrams ─────────────────────────── */
+  .diagram-wrap {
+    overflow-x: auto; background: var(--bg-card); border: 1px solid var(--line-strong);
+    border-radius: var(--radius); box-shadow: var(--shadow); padding: 6px;
+  }
+  .diagram-wrap svg { display: block; }
+  .diagram-caption { font-family: var(--mono); font-size: 0.72rem; color: var(--text-3); margin-top: 9px; }
+  .dbox-title { font-family: var(--font-pixel); font-size: 10px; font-weight: 700; fill: var(--text); }
+  .dbox-sub   { font-family: var(--mono); font-size: 9.5px; fill: var(--text-2); }
+  .dbox-tag   { font-family: var(--mono); font-size: 9px; fill: var(--text-3); }
+  .darrow-label { font-family: var(--mono); font-size: 9px; fill: var(--text-3); }
+
+  /* ── Pipeline ─────────────────────────── */
+  .legend { display: flex; flex-wrap: wrap; gap: 22px; margin-bottom: 22px; }
+  .legend-item { display: flex; align-items: center; gap: 9px; font-family: var(--font-pixel); font-size: 0.64rem; color: var(--text-2); }
+  .swatch { width: 11px; height: 11px; border-radius: 2px; border: 1px solid var(--line-strong); flex-shrink: 0; }
+  .sw-model { background: var(--gold); }
+  .sw-det   { background: var(--accent); }
+
+  .pipe { display: flex; flex-direction: column; gap: 0; }
+  .stage {
+    display: grid; grid-template-columns: 50px 1fr; gap: 18px;
+    position: relative; padding-bottom: 16px;
+  }
+  .stage:last-child { padding-bottom: 0; }
+  .stage-rail { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .stage-num {
+    font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
+    width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--line-strong); background: var(--bg-card); color: var(--text-2);
+    font-variant-numeric: tabular-nums;
+  }
+  .stage.is-model .stage-num { color: var(--gold); }
+  .stage.is-det   .stage-num { color: var(--accent); }
+  .stage.is-both  .stage-num { color: var(--text); }
+  .stage-line { flex: 1; width: 1px; background: var(--line); margin-top: 6px; }
+  .stage:last-child .stage-line { display: none; }
+
+  .stage-body {
+    background: var(--bg-card); border: 1px solid var(--line-strong);
+    border-radius: var(--radius); padding: 13px 16px; box-shadow: var(--shadow);
+  }
+  .stage.is-model .stage-body { border-left: 3px solid var(--gold); }
+  .stage.is-det   .stage-body { border-left: 3px solid var(--accent); }
+  .stage.is-both  .stage-body { border-left: 3px solid; border-image: linear-gradient(180deg, var(--gold), var(--accent)) 1; }
+
+  .stage-top { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-bottom: 5px; }
+  .stage-name { font-size: 0.92rem; font-weight: 700; letter-spacing: -0.01em; color: var(--text); }
+  .tag {
+    font-family: var(--font-pixel); font-size: 0.58rem; letter-spacing: 0.02em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+  }
+  .tag-model { background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(180,121,26,0.4); }
+  .tag-det   { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(42,82,160,0.32); }
+  .stage-desc { font-size: 0.85rem; color: var(--text-2); }
+
+  /* ── Data table ───────────────────────── */
+  .table-wrap { overflow-x: auto; background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: var(--radius); box-shadow: var(--shadow); }
+  table.data { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 0.8rem; min-width: 520px; }
+  table.data th, table.data td { padding: 10px 16px; text-align: right; border-bottom: 1px solid var(--border-2); white-space: nowrap; }
+  table.data th:first-child, table.data td:first-child { text-align: left; }
+  table.data thead th { font-family: var(--font-pixel); font-size: 0.6rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--text-3); background: var(--bg-card-2); }
+  table.data tbody tr:last-child td { border-bottom: none; }
+  table.data tbody tr.hi td { color: var(--accent); font-weight: 700; }
+  table.data tbody tr.hi td:first-child { color: var(--text); }
+  .table-caption { font-family: var(--mono); font-size: 0.76rem; color: var(--text-3); margin-top: 9px; }
+
+  /* ── Callout ──────────────────────────── */
+  .callout {
+    background: var(--gold-dim);
+    border: 1px solid rgba(180,121,26,0.4); border-radius: var(--radius);
+    padding: 16px 18px; margin-top: 16px;
+  }
+  .callout.blue { background: var(--accent-dim); border-color: rgba(42,82,160,0.35); }
+  .callout .card-label { font-family: var(--font-pixel); font-size: 0.6rem; letter-spacing: 0.03em; text-transform: uppercase; margin-bottom: 8px; display: block; color: var(--gold); }
+  .callout.blue .card-label { color: var(--accent); }
+  .callout p { color: var(--text-2); font-size: 0.87rem; }
+  .callout p + p { margin-top: 8px; }
+
+  /* ── Lists ────────────────────────────── */
+  .bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .bullets li { position: relative; padding-left: 18px; color: var(--text-2); font-size: 0.88rem; }
+  .bullets li::before {
+    content: "▸"; position: absolute; left: 0; top: 0; color: var(--accent); font-size: 0.75em;
+  }
+  .bullets strong { color: var(--text); font-weight: 700; }
+
+  /* ── Stack grid ───────────────────────── */
+  .stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+  .stack-item { background: var(--bg-card); border: 1px solid var(--line-strong); border-radius: var(--radius-sm); padding: 12px 14px; box-shadow: var(--shadow); }
+  .stack-item h4 {
+    font-family: var(--font-pixel); font-size: 0.58rem; letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--text-3); font-weight: 700; margin-bottom: 6px;
+  }
+  .stack-item p { font-family: var(--mono); font-size: 0.78rem; color: var(--text-2); }
+
+  /* ── Footer ───────────────────────────── */
+  .foot { padding: 40px 0 56px; text-align: center; background: var(--bg-card); border-top: 1px solid var(--line-strong); }
+  .foot p { font-family: var(--mono); font-size: 0.72rem; font-weight: 600; color: var(--text-3); margin-bottom: 16px; }
+
+  @media (max-width: 620px) {
+    .stage { grid-template-columns: 36px 1fr; gap: 12px; }
+    .stage-num { width: 26px; height: 26px; font-size: 0.64rem; }
+    .metric { padding: 18px 14px; }
+    table.data { font-size: 0.72rem; }
+    table.data th, table.data td { padding: 8px 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap win">
+    <div class="win-bar">
+      <span class="win-box"></span>
+      <span class="win-title">TrialRAG</span>
+      <span class="win-box zoom"></span>
+    </div>
+    <div class="win-body">
+    <a class="back" href="index.html">&larr; Back to portfolio</a>
+    <span class="eyebrow">Case Study · 2026</span>
+    <h1 class="hero-title">TrialRAG</h1>
+    <p class="thesis">
+      Production RAG over ClinicalTrials.gov protocol data. Hybrid dense+sparse retrieval
+      (Postgres/pgvector HNSW + full-text, fused with RRF) → cross-encoder rerank → Claude
+      generation with span-level citations. Terraform-provisioned AWS, CI-gated on measured
+      retrieval quality.
+    </p>
+    <div class="meta-row">
+      <span class="chip">Python 3.13 · FastAPI</span>
+      <span class="chip">Postgres / pgvector</span>
+      <span class="chip">Claude + Voyage AI</span>
+      <span class="chip">Terraform · AWS App Runner</span>
+      <span class="chip">GitHub Actions OIDC</span>
+      <span class="chip">Neon Postgres</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://zgxb6ppkku.us-east-1.awsapprunner.com" target="_blank" rel="noopener">Live demo →</a>
+    </div>
+    <p class="note">Personal AWS account, small monthly budget cap. Down or rate-limited = the cost circuit breaker working as designed.</p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="metrics">
+    <div class="metric"><span class="mval">1.00</span><span class="mlbl">Recall@5 (hybrid)</span></div>
+    <div class="metric"><span class="mval">0.995</span><span class="mlbl">MRR (hybrid)</span></div>
+    <div class="metric"><span class="mval">432</span><span class="mlbl">Chunks / 30 studies</span></div>
+    <div class="metric"><span class="mval">≤2%</span><span class="mlbl">CI recall regression gate</span></div>
+    <div class="metric"><span class="mval">6</span><span class="mlbl">Prod incidents, root-caused</span></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title">Request-path architecture</h2>
+      <p class="sec-sub">/v1/query — rate limit → budget check → cost breaker → jailbreak screen → retrieve → rerank → generate → SSE</p>
+    </div>
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 1180 250" width="1180" height="250" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowQ" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--text-2)"/>
+          </marker>
+        </defs>
+
+        <!-- Client -->
+        <rect x="10" y="90" width="120" height="60" rx="6" fill="var(--bg-card)" stroke="var(--line-strong)"/>
+        <text x="70" y="115" text-anchor="middle" class="dbox-title">Client</text>
+        <text x="70" y="130" text-anchor="middle" class="dbox-sub">SSE stream</text>
+
+        <!-- FastAPI -->
+        <rect x="170" y="90" width="140" height="60" rx="6" fill="var(--bg-card)" stroke="var(--line-strong)"/>
+        <text x="240" y="112" text-anchor="middle" class="dbox-title">FastAPI</text>
+        <text x="240" y="127" text-anchor="middle" class="dbox-sub">/v1/query</text>
+        <text x="240" y="140" text-anchor="middle" class="dbox-tag">async, streaming</text>
+
+        <!-- Guardrails (taller) -->
+        <rect x="350" y="30" width="150" height="180" rx="6" fill="var(--accent-dim)" stroke="var(--line-strong)"/>
+        <text x="425" y="50" text-anchor="middle" class="dbox-title">Guardrails</text>
+        <text x="425" y="72" text-anchor="middle" class="dbox-sub">rate limit</text>
+        <text x="425" y="94" text-anchor="middle" class="dbox-sub">daily budget check</text>
+        <text x="425" y="116" text-anchor="middle" class="dbox-sub">LLM cost breaker</text>
+        <text x="425" y="138" text-anchor="middle" class="dbox-sub">jailbreak screen</text>
+        <text x="425" y="153" text-anchor="middle" class="dbox-tag">(Haiku classifier)</text>
+        <text x="425" y="175" text-anchor="middle" class="dbox-sub">query → filters</text>
+        <text x="425" y="190" text-anchor="middle" class="dbox-tag">(Claude structured out)</text>
+
+        <!-- Retrieval -->
+        <rect x="540" y="20" width="180" height="200" rx="6" fill="var(--bg-card)" stroke="var(--line-strong)"/>
+        <text x="630" y="42" text-anchor="middle" class="dbox-title">Hybrid Retrieval</text>
+        <text x="630" y="60" text-anchor="middle" class="dbox-tag">Postgres · 1 SQL stmt</text>
+        <line x1="555" y1="72" x2="705" y2="72" stroke="var(--border-2)"/>
+        <text x="630" y="90" text-anchor="middle" class="dbox-sub">metadata pre-filter (CTE)</text>
+        <text x="630" y="112" text-anchor="middle" class="dbox-sub">dense: HNSW cosine</text>
+        <text x="630" y="132" text-anchor="middle" class="dbox-sub">sparse: full-text (GIN)</text>
+        <line x1="555" y1="146" x2="705" y2="146" stroke="var(--border-2)"/>
+        <text x="630" y="166" text-anchor="middle" class="dbox-sub" font-weight="700">RRF fuse</text>
+        <text x="630" y="186" text-anchor="middle" class="dbox-tag">recall@1 0.990</text>
+        <text x="630" y="202" text-anchor="middle" class="dbox-tag">vs 0.962 dense / 0.048 sparse</text>
+
+        <!-- Rerank -->
+        <rect x="760" y="70" width="150" height="100" rx="6" fill="var(--gold-dim)" stroke="var(--line-strong)"/>
+        <text x="835" y="92" text-anchor="middle" class="dbox-title">Rerank</text>
+        <text x="835" y="110" text-anchor="middle" class="dbox-sub">Voyage rerank-2.5-lite</text>
+        <text x="835" y="128" text-anchor="middle" class="dbox-sub">+ per-study diversity cap</text>
+        <text x="835" y="150" text-anchor="middle" class="dbox-tag">MRR 0.995</text>
+
+        <!-- Generation -->
+        <rect x="950" y="55" width="220" height="130" rx="6" fill="var(--gold-dim)" stroke="var(--line-strong)"/>
+        <text x="1060" y="77" text-anchor="middle" class="dbox-title">Generation — Claude</text>
+        <text x="1060" y="95" text-anchor="middle" class="dbox-sub">chunks as isolated</text>
+        <text x="1060" y="110" text-anchor="middle" class="dbox-sub"><tspan class="dbox-tag">document</tspan> blocks</text>
+        <text x="1060" y="130" text-anchor="middle" class="dbox-sub">(never string-interpolated)</text>
+        <text x="1060" y="150" text-anchor="middle" class="dbox-sub">citations via document_index</text>
+        <text x="1060" y="168" text-anchor="middle" class="dbox-tag">prompt cache on last block</text>
+
+        <!-- Arrows forward -->
+        <line x1="130" y1="120" x2="166" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowQ)"/>
+        <line x1="310" y1="120" x2="346" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowQ)"/>
+        <line x1="500" y1="120" x2="536" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowQ)"/>
+        <line x1="720" y1="120" x2="756" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowQ)"/>
+        <line x1="910" y1="120" x2="946" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowQ)"/>
+
+        <!-- Return SSE path -->
+        <path d="M1060,185 L1060,235 L70,235 L70,152" fill="none" stroke="var(--text-3)" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrowQ)"/>
+        <text x="565" y="248" text-anchor="middle" class="darrow-label">SSE: text deltas + citation spans, streamed as generated</text>
+      </svg>
+    </div>
+    <p class="diagram-caption">Query parsing and generation are model calls (gold); ingestion, retrieval fusion, and validation are deterministic code (blue).</p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title">Pipeline detail</h2>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><span class="swatch sw-model"></span> Generative</div>
+      <div class="legend-item"><span class="swatch sw-det"></span> Deterministic</div>
+    </div>
+
+    <div class="pipe">
+
+      <div class="stage is-det">
+        <div class="stage-rail"><span class="stage-num">01</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Ingest &amp; chunk</span>
+            <span class="tag tag-det">Deterministic</span>
+          </div>
+          <p class="stage-desc">
+            Async client against ClinicalTrials.gov API v2 — token-bucket rate limiting, pagination, incremental sync.
+            Chunking is domain-aware: eligibility criteria packed whole (no split/overlap — atomic units), prose recursively
+            split with overlap. Verified with property-based tests (Hypothesis) + real-data regression tests.
+          </p>
+        </div>
+      </div>
+
+      <div class="stage is-det">
+        <div class="stage-rail"><span class="stage-num">02</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Embed &amp; index</span>
+            <span class="tag tag-det">Deterministic</span>
+          </div>
+          <p class="stage-desc">
+            Voyage <code>voyage-4-lite</code>, Matryoshka-truncated to 512 dims, content-hash cached. Bulk-loaded into
+            Postgres/pgvector as <code>halfvec(512)</code> with combined HNSW + GIN indexes.
+          </p>
+        </div>
+      </div>
+
+      <div class="stage is-model">
+        <div class="stage-rail"><span class="stage-num">03</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Parse query → filters</span>
+            <span class="tag tag-model">Claude structured output</span>
+          </div>
+          <p class="stage-desc">
+            NL question → structured filters (phase/status/age/sex). Condition/keyword terms kept as free text
+            deliberately, to avoid dropping paraphrases. Age filtering is interval-overlap logic against eligibility
+            ranges, not equality.
+          </p>
+        </div>
+      </div>
+
+      <div class="stage is-det">
+        <div class="stage-rail"><span class="stage-num">04</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Hybrid retrieve &amp; fuse</span>
+            <span class="tag tag-det">Deterministic</span>
+          </div>
+          <p class="stage-desc">
+            One SQL statement, three CTEs: metadata pre-filter → dense HNSW cosine + sparse full-text → Reciprocal
+            Rank Fusion. Dense-only 0.962 recall@1, sparse-only 0.048, fused hybrid 0.990.
+          </p>
+        </div>
+      </div>
+
+      <div class="stage is-both">
+        <div class="stage-rail"><span class="stage-num">05</span><span class="stage-line"></span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Rerank &amp; diversify</span>
+            <span class="tag tag-model">Voyage rerank-2.5-lite</span>
+            <span class="tag tag-det">Diversity cap</span>
+          </div>
+          <p class="stage-desc">
+            Cross-encoder re-score of fused candidates, capped per-study so one heavily-chunked trial can't dominate
+            the result set.
+          </p>
+        </div>
+      </div>
+
+      <div class="stage is-model">
+        <div class="stage-rail"><span class="stage-num">06</span></div>
+        <div class="stage-body">
+          <div class="stage-top">
+            <span class="stage-name">Generate with citations</span>
+            <span class="tag tag-model">Claude</span>
+          </div>
+          <p class="stage-desc">
+            Chunks passed as isolated <code>document</code> content blocks, never string-interpolated — this is the
+            prompt-injection containment mechanism, verified live against a real injection attempt. Prompt caching on
+            the last block; citations resolve via <code>document_index</code> back to source chunk. Haiku screens
+            off-topic/jailbreak queries before this call runs; system prompt enforces abstention and refuses medical advice.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title">Ablation — 108-question golden set</h2>
+      <p class="sec-sub">Generated programmatically from real corpus fields, not hand-labeled. Full write-up: <code>docs/EVALUATION.md</code></p>
+    </div>
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr><th>Configuration</th><th>Recall@1</th><th>Recall@5</th><th>Recall@10</th><th>MRR</th><th>nDCG@10</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Dense only</td><td>0.962</td><td>1.000</td><td>1.000</td><td>0.981</td><td>0.987</td></tr>
+          <tr><td>Sparse only</td><td>0.048</td><td>0.057</td><td>0.057</td><td>0.052</td><td>0.054</td></tr>
+          <tr class="hi"><td>Hybrid (RRF)</td><td>0.990</td><td>1.000</td><td>1.000</td><td>0.995</td><td>0.995</td></tr>
+          <tr><td>Hybrid + rerank</td><td>0.981</td><td>1.000</td><td>1.000</td><td>0.990</td><td>0.993</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <span class="card-label">Negative results, reported as-is</span>
+      <p><strong>Rerank doesn't clearly beat plain hybrid at this corpus size</strong> — hybrid already saturates recall@5, so there's no headroom for a reranker to show a benefit.</p>
+      <p><strong>ANN always returns <em>something</em></strong> — "no good match" isn't detectable from an empty result set, only from score magnitude. Pushed abstention logic into the generation layer instead of retrieval.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2 class="sec-title">CI/CD &amp; infrastructure</h2>
+      <p class="sec-sub">Terraform-managed AWS. Every PR is quality-gated on retrieval regression, not just tests passing.</p>
+    </div>
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 1180 260" width="1180" height="260" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrowC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--text-2)"/>
+          </marker>
+        </defs>
+
+        <!-- PR -->
+        <rect x="10" y="90" width="130" height="60" rx="6" fill="var(--bg-card)" stroke="var(--line-strong)"/>
+        <text x="75" y="115" text-anchor="middle" class="dbox-title">git push / PR</text>
+        <text x="75" y="132" text-anchor="middle" class="dbox-tag">GitHub</text>
+
+        <!-- CI checks -->
+        <rect x="180" y="30" width="200" height="180" rx="6" fill="var(--accent-dim)" stroke="var(--line-strong)"/>
+        <text x="280" y="52" text-anchor="middle" class="dbox-title">GitHub Actions — PR</text>
+        <text x="280" y="74" text-anchor="middle" class="dbox-sub">lint + mypy --strict</text>
+        <text x="280" y="94" text-anchor="middle" class="dbox-sub">ruff + bandit</text>
+        <text x="280" y="114" text-anchor="middle" class="dbox-sub">hermetic pytest</text>
+        <text x="280" y="130" text-anchor="middle" class="dbox-tag">(disposable Postgres)</text>
+        <line x1="195" y1="142" x2="365" y2="142" stroke="var(--border-2)"/>
+        <text x="280" y="162" text-anchor="middle" class="dbox-sub" font-weight="700">retrieval-regression gate</text>
+        <text x="280" y="180" text-anchor="middle" class="dbox-tag">ephemeral Neon DB branch</text>
+        <text x="280" y="196" text-anchor="middle" class="dbox-tag">fail if recall@10 drops &gt;2%</text>
+
+        <!-- OIDC -->
+        <rect x="420" y="90" width="130" height="60" rx="6" fill="var(--bg-card)" stroke="var(--line-strong)"/>
+        <text x="485" y="112" text-anchor="middle" class="dbox-title">merge → OIDC</text>
+        <text x="485" y="130" text-anchor="middle" class="dbox-tag">no static AWS keys</text>
+
+        <!-- Build/push -->
+        <rect x="590" y="90" width="140" height="60" rx="6" fill="var(--bg-card)" stroke="var(--line-strong)"/>
+        <text x="660" y="112" text-anchor="middle" class="dbox-title">Build + push</text>
+        <text x="660" y="130" text-anchor="middle" class="dbox-tag">ECR, git-SHA tag</text>
+
+        <!-- Migrate -->
+        <rect x="770" y="90" width="130" height="60" rx="6" fill="var(--bg-card)" stroke="var(--line-strong)"/>
+        <text x="835" y="112" text-anchor="middle" class="dbox-title">Migrate</text>
+        <text x="835" y="130" text-anchor="middle" class="dbox-tag">Neon (prod)</text>
+
+        <!-- App Runner -->
+        <rect x="940" y="60" width="220" height="120" rx="6" fill="var(--gold-dim)" stroke="var(--line-strong)"/>
+        <text x="1050" y="82" text-anchor="middle" class="dbox-title">App Runner — blue/green</text>
+        <text x="1050" y="102" text-anchor="middle" class="dbox-sub">poll RUNNING → smoke test</text>
+        <text x="1050" y="122" text-anchor="middle" class="dbox-sub" fill="var(--accent)">✓ healthy → live traffic</text>
+        <text x="1050" y="142" text-anchor="middle" class="dbox-sub" fill="var(--red)">✗ fail → auto rollback</text>
+        <text x="1050" y="162" text-anchor="middle" class="dbox-tag">tested live w/ broken healthz</text>
+
+        <!-- Arrows -->
+        <line x1="140" y1="120" x2="176" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowC)"/>
+        <line x1="380" y1="120" x2="416" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowC)"/>
+        <line x1="550" y1="120" x2="586" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowC)"/>
+        <line x1="730" y1="120" x2="766" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowC)"/>
+        <line x1="900" y1="120" x2="936" y2="120" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrowC)"/>
+
+        <!-- Terraform bracket -->
+        <path d="M420,225 L420,235 L1160,235 L1160,225" fill="none" stroke="var(--text-3)" stroke-width="1"/>
+        <text x="790" y="250" text-anchor="middle" class="darrow-label">Terraform-managed: App Runner · ECR · IAM (OIDC) · Secrets Manager · CloudWatch · Budgets</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2 class="sec-title">Production incidents — root causes</h2></div>
+    <div class="col">
+      <ul class="bullets">
+        <li><strong>OIDC trust-policy claim mismatch</strong> — GitHub's OIDC token claims didn't match the IAM trust policy's condition keys; blocked CI deploys until corrected.</li>
+        <li><strong>ECR tag-immutability conflict</strong> — BuildKit caching collided with ECR's immutable-tag setting; fixed by changing the tagging strategy.</li>
+        <li><strong>IAM PassRole gap</strong> — App Runner's deploy role lacked permission to pass its own running-task role; surfaced only at deploy time.</li>
+        <li><strong>Budget-alarm threshold bug</strong> — CloudWatch billing alarm fired at 30x the intended spend threshold.</li>
+        <li><strong>Client-side SSE parsing bug</strong> — <code>sse_starlette</code> terminates frames with <code>\r\n\r\n</code>; frontend's <code>buffer.indexOf("\n\n")</code> could never match inside that string, so every response buffered forever and rendered nothing. Backend logs showed correct completion both times. Root-caused with a headless browser tracing the parser — curl-based testing never caught it, since curl doesn't execute JS. Fix: <code>/\r?\n\r?\n/</code> regex accepting either line ending.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2 class="sec-title">Engineering rigor</h2></div>
+    <div class="col">
+      <ul class="bullets">
+        <li><code>mypy --strict</code> + <code>ruff</code> (incl. bandit security rules), clean and enforced in CI.</li>
+        <li>Two-tier eval — deterministic recall/MRR/nDCG (pure numpy, seconds per PR) + LLM-as-judge scoring for faithfulness/completeness on generated answers.</li>
+        <li>Load tested with k6 against the streaming query path.</li>
+        <li>OpenTelemetry tracing across retrieve → rerank → generate.</li>
+        <li>ADRs: Postgres over Pinecone/Qdrant (metadata filters need to share the vector search's query plan), no LangChain/LlamaIndex (SQL + Anthropic calls are simple enough that a framework adds indirection without payoff), App Runner over Lambda/Fargate.</li>
+        <li>Resilience drills beyond the production rollback test, exercising dependency-failure behavior.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2 class="sec-title">Stack</h2></div>
+    <div class="stack">
+      <div class="stack-item"><h4>Retrieval</h4><p>Postgres + pgvector (HNSW/GIN), Voyage AI embed + rerank, RRF fusion</p></div>
+      <div class="stack-item"><h4>Generation</h4><p>Claude — structured output, document-block citations, prompt caching</p></div>
+      <div class="stack-item"><h4>Backend</h4><p>Python 3.13, FastAPI, asyncpg, httpx, SSE streaming</p></div>
+      <div class="stack-item"><h4>Infra</h4><p>Terraform → App Runner / ECR / IAM (OIDC) / Secrets Manager / CloudWatch / Budgets</p></div>
+      <div class="stack-item"><h4>CI/CD</h4><p>GitHub Actions, ephemeral Neon branches, blue/green + auto rollback</p></div>
+      <div class="stack-item"><h4>Quality</h4><p>mypy --strict, ruff+bandit, Hypothesis, pytest, k6, OpenTelemetry</p></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p>Brannon White · 2026</p>
+    <div class="cta-row" style="justify-content:center">
+      <a class="btn btn-primary" href="https://zgxb6ppkku.us-east-1.awsapprunner.com" target="_blank" rel="noopener">Live demo →</a>
+      <a class="btn btn-ghost" href="index.html">Back to portfolio</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

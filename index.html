@@ -77,7 +77,7 @@
                     </div>
                     <div class="stat-div"></div>
                     <div class="stat">
-                        <span class="stat-num">4</span>
+                        <span class="stat-num">5</span>
                         <span class="stat-lbl">AI/ML Projects</span>
                     </div>
                     <div class="stat-div"></div>
@@ -218,6 +218,41 @@
                             <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                             Live Demo
                         </button>
+                    </div>
+                </div>
+
+                <div class="project-card reveal" data-category="llm">
+                    <div class="project-badge">🚀 Live in Production</div>
+                    <div class="project-top">
+                        <span class="project-icon">🧬</span>
+                        <div class="project-top-right">
+                            <span class="project-date-badge">Aug 2026</span>
+                        </div>
+                    </div>
+                    <h3 class="project-title">TrialRAG</h3>
+                    <p class="project-desc">
+                        Production RAG system over real ClinicalTrials.gov data — hybrid dense + sparse retrieval fused with RRF, Claude-generated answers with span-level citations, deployed on AWS via Terraform with a CI pipeline that gates every PR on measured retrieval quality.
+                    </p>
+                    <div class="project-metrics">
+                        <div class="metric"><span class="mval">1.00</span><span class="mlbl">Recall@5 (hybrid)</span></div>
+                        <div class="metric"><span class="mval">108-Q</span><span class="mlbl">Golden eval set</span></div>
+                        <div class="metric"><span class="mval">6</span><span class="mlbl">Prod incidents resolved</span></div>
+                    </div>
+                    <div class="project-card-footer">
+                        <div class="tag-row">
+                            <span class="tag">Hybrid Retrieval</span><span class="tag">Claude</span><span class="tag">pgvector</span>
+                            <span class="tag">AWS</span><span class="tag">Terraform</span><span class="tag">FastAPI</span>
+                        </div>
+                        <div class="project-top-right">
+                            <a class="demo-launch-btn" href="trialrag.html">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M9 18l6-6-6-6"/></svg>
+                                Case Study
+                            </a>
+                            <a class="demo-launch-btn" href="https://zgxb6ppkku.us-east-1.awsapprunner.com" target="_blank" rel="noopener">
+                                <svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Live Demo
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -413,12 +448,16 @@
                     <h3 class="skill-cat-title"><span class="skill-icon">🤖</span>AI / Machine Learning</h3>
                     <div class="skill-tags">
                         <span class="stag">OpenAI API (GPT-4)</span>
+                        <span class="stag">Claude API</span>
                         <span class="stag">Pinecone</span>
                         <span class="stag">RAG</span>
+                        <span class="stag">Hybrid Retrieval (RRF)</span>
+                        <span class="stag">Reranking</span>
                         <span class="stag">Vector Search</span>
                         <span class="stag">Prompt Engineering</span>
                         <span class="stag">LangChain</span>
-                        <span class="stag">pgvector</span>
+                        <span class="stag">pgvector (HNSW)</span>
+                        <span class="stag">Voyage AI Embeddings</span>
                         <span class="stag">MCP</span>
                         <span class="stag">PyTorch</span>
                         <span class="stag">Hugging Face</span>
@@ -449,13 +488,19 @@
                     <div class="skill-tags">
                         <span class="stag">.NET Core</span>
                         <span class="stag">Node.js</span>
+                        <span class="stag">FastAPI</span>
                         <span class="stag">REST APIs</span>
+                        <span class="stag">SSE Streaming</span>
+                        <span class="stag">Async Python</span>
                         <span class="stag">Microservices</span>
                     </div>
                 </div>
                 <div class="skill-cat reveal">
                     <h3 class="skill-cat-title"><span class="skill-icon">🛠️</span>Cloud &amp; DevOps</h3>
                     <div class="skill-tags">
+                        <span class="stag">AWS (App Runner, ECR, IAM/OIDC)</span>
+                        <span class="stag">Terraform</span>
+                        <span class="stag">GitHub Actions</span>
                         <span class="stag">Azure DevOps</span>
                         <span class="stag">CI/CD</span>
                         <span class="stag">Git</span>
@@ -470,8 +515,12 @@
                     <div class="skill-tags">
                         <span class="stag">Selenium</span>
                         <span class="stag">MSTest</span>
-                        <span class="stag">SQL Server</span>
                         <span class="stag">Jest</span>
+                        <span class="stag">mypy (strict)</span>
+                        <span class="stag">Hypothesis</span>
+                        <span class="stag">k6 Load Testing</span>
+                        <span class="stag">SQL Server</span>
+                        <span class="stag">Postgres / Neon</span>
                     </div>
                 </div>
             </div>

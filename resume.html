@@ -397,8 +397,63 @@
         <section class="section summary">
             <div class="section-title">Summary</div>
             <p>
-                Software Engineer II with 4+ years of experience architecting and shipping production systems across full-stack web applications, enterprise platforms, and cloud CI/CD pipelines. Proven track record modernizing legacy enterprise software, cutting delivery time, and leading technical initiatives end-to-end. Hands-on builder of applied AI systems — retrieval-augmented generation (RAG), vector search, and LLM-powered products — including a hackathon-winning enterprise chatbot now used to query 10,000+ business rules in natural language. Currently pursuing an <strong>M.S. in AI &amp; Machine Learning</strong>. Combines strong engineering fundamentals (React, .NET, Node.js, distributed systems) with growing depth in the AI stack (OpenAI API, LangChain, Pinecone, PyTorch), positioning for both Software Engineer and AI/ML Engineer roles.
+                Software Engineer II with 4+ years of experience architecting and shipping production systems across full-stack web applications, enterprise platforms, and cloud CI/CD pipelines. Proven track record modernizing legacy enterprise software, cutting delivery time, and leading technical initiatives end-to-end. Hands-on builder of applied AI systems — retrieval-augmented generation (RAG), hybrid vector search, and LLM-powered products — including a hackathon-winning enterprise chatbot querying 10,000+ business rules in natural language, and a solo-built production RAG system deployed on AWS with a published retrieval ablation study and CI-gated retrieval quality. Currently pursuing an <strong>M.S. in AI &amp; Machine Learning</strong>. Combines strong engineering fundamentals (React, .NET, Node.js, distributed systems) with growing depth across the AI/ML stack (OpenAI API, Claude API, LangChain, Pinecone, pgvector, PyTorch) and cloud infrastructure (AWS, Terraform, GitHub Actions), positioning for both Software Engineer and AI/ML Engineer roles.
             </p>
+        </section>
+
+        <!-- Selected Projects -->
+        <section class="section">
+            <div class="section-title">Selected Projects</div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">TrialRAG — Production RAG System</span>
+                    <span class="job-period">2026</span>
+                </div>
+                <ul class="job-bullets">
+                    <li>Built and deployed a production RAG system over real ClinicalTrials.gov protocol data — hybrid dense+sparse retrieval (RRF), Claude-generated answers with span-level citations, and a CI pipeline gating every PR on measured retrieval quality</li>
+                    <li>Published a retrieval ablation study (dense vs. sparse vs. hybrid vs. reranked) against a 108-question golden set, reaching <strong>0.995 MRR / 1.00 recall@5</strong> in the hybrid configuration</li>
+                    <li>Provisioned production AWS infrastructure via Terraform (App Runner, ECR, IAM/OIDC, Secrets Manager) with automated blue/green deploys and a rollback path verified in a live production drill</li>
+                </ul>
+                <div class="job-tags">
+                    <span class="jtag">Claude</span>
+                    <span class="jtag">Hybrid Retrieval</span>
+                    <span class="jtag">pgvector</span>
+                    <span class="jtag">AWS</span>
+                    <span class="jtag">Terraform</span>
+                    <span class="jtag">FastAPI</span>
+                </div>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Enterprise RAG Chatbot</span>
+                    <span class="job-period">2024</span>
+                </div>
+                <ul class="job-bullets">
+                    <li>Semantic retrieval pipeline using Pinecone embeddings and GPT-4 for natural-language queries over 10,000+ business rules — hackathon winner</li>
+                </ul>
+                <div class="job-tags">
+                    <span class="jtag">RAG</span>
+                    <span class="jtag">Pinecone</span>
+                    <span class="jtag">GPT-4</span>
+                </div>
+            </div>
+
+            <div class="job">
+                <div class="job-header">
+                    <span class="job-title">Wanderly</span>
+                    <span class="job-period">2026</span>
+                </div>
+                <ul class="job-bullets">
+                    <li>AI travel itinerary app built with React Native and Firebase — Claude-driven itinerary generation with a deterministic verification layer against real venue and routing data</li>
+                </ul>
+                <div class="job-tags">
+                    <span class="jtag">React Native</span>
+                    <span class="jtag">Claude</span>
+                    <span class="jtag">Firebase</span>
+                </div>
+            </div>
         </section>
 
         <!-- Experience -->
@@ -512,6 +567,13 @@
             <div class="section-title">Key Achievements</div>
 
             <div class="achievement">
+                <div class="ach-title"><span class="ach-star">★</span> Production RAG Deployment</div>
+                <p class="ach-body">
+                    Solo-built and shipped TrialRAG to AWS via Terraform — hybrid retrieval, Claude generation with citations, and a CI pipeline that gates every PR on a published retrieval ablation study (0.995 MRR).
+                </p>
+            </div>
+
+            <div class="achievement">
                 <div class="ach-title"><span class="ach-star">★</span> Hackathon Winner</div>
                 <p class="ach-body">
                     Designed and shipped an enterprise RAG chatbot using React, Pinecone vector search, and GPT-4 — making 10,000+ business rules queryable in plain English. Won company-wide competition.
@@ -547,13 +609,17 @@
             <div class="skill-group">
                 <div class="skill-group-title">AI / Machine Learning</div>
                 <div class="skill-list">
+                    <span class="skill-chip">Claude API</span>
                     <span class="skill-chip">OpenAI API (GPT-4)</span>
-                    <span class="skill-chip">Pinecone</span>
                     <span class="skill-chip">RAG</span>
+                    <span class="skill-chip">Hybrid Retrieval (RRF)</span>
+                    <span class="skill-chip">Reranking</span>
+                    <span class="skill-chip">Pinecone</span>
+                    <span class="skill-chip">pgvector (HNSW)</span>
+                    <span class="skill-chip">Voyage AI Embeddings</span>
                     <span class="skill-chip">Vector Search</span>
                     <span class="skill-chip">Prompt Engineering</span>
                     <span class="skill-chip">LangChain</span>
-                    <span class="skill-chip">pgvector</span>
                     <span class="skill-chip">MCP</span>
                     <span class="skill-chip">PyTorch</span>
                     <span class="skill-chip">Hugging Face</span>
@@ -587,7 +653,10 @@
                 <div class="skill-list">
                     <span class="skill-chip">.NET Core</span>
                     <span class="skill-chip">Node.js</span>
+                    <span class="skill-chip">FastAPI</span>
                     <span class="skill-chip">REST APIs</span>
+                    <span class="skill-chip">SSE Streaming</span>
+                    <span class="skill-chip">Async Python</span>
                     <span class="skill-chip">Microservices</span>
                 </div>
             </div>
@@ -595,6 +664,9 @@
             <div class="skill-group">
                 <div class="skill-group-title">Cloud &amp; DevOps</div>
                 <div class="skill-list">
+                    <span class="skill-chip">AWS (App Runner, ECR, IAM/OIDC)</span>
+                    <span class="skill-chip">Terraform</span>
+                    <span class="skill-chip">GitHub Actions</span>
                     <span class="skill-chip">Azure DevOps</span>
                     <span class="skill-chip">CI/CD</span>
                     <span class="skill-chip">Git</span>
@@ -610,8 +682,12 @@
                 <div class="skill-list">
                     <span class="skill-chip">Selenium</span>
                     <span class="skill-chip">MSTest</span>
-                    <span class="skill-chip">SQL Server</span>
                     <span class="skill-chip">Jest</span>
+                    <span class="skill-chip">mypy (strict)</span>
+                    <span class="skill-chip">Hypothesis</span>
+                    <span class="skill-chip">k6 Load Testing</span>
+                    <span class="skill-chip">SQL Server</span>
+                    <span class="skill-chip">Postgres / Neon</span>
                 </div>
             </div>
         </section>
